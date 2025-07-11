@@ -1,0 +1,6 @@
+{
+  "name": "Bahn",
+  "description": "An AI-powered Kanban board for streamlining development workflows. Generate tasks, move them through your pipeline, and get actionable AI prompts to accelerate your work.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
