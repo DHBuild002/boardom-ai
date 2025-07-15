@@ -11,8 +11,8 @@ function App() {
       {/* Header */}
       <header className="px-6 py-4 border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-black tracking-tight">
-            boardom<span className="inline-block w-2 h-2 bg-[#00171f] ml-1 mb-1"></span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#007ea7] flex items-end">
+            boardom<span className="inline-block w-2 h-2 bg-[#00171f] ml-1 mb-0.5"></span>
           </h1>
           <a 
             href="https://x.com/totalboardom" 
@@ -28,15 +28,15 @@ function App() {
       {/* Hero Section */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
-            AI-Powered Workflow
+          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-[#00171f]">
+            AI Prompts Meet
             <br />
-            <span className="text-[#007ea7]">Without the Boredom</span>
+            <span className="text-[#007ea7]">boardom Workflow</span>
           </h2>
           
           <p className="text-xl md:text-2xl text-[#003459] mb-12 max-w-3xl mx-auto leading-relaxed">
-            Transform your development process with intelligent Kanban boards that guide AI development 
-            to limit the boredom of endless prompting circles.
+            Structure your AI development process with intelligent workflow management 
+            that guides prompting to eliminate endless circles.
           </p>
 
           {/* Dynamic Carousel */}
@@ -55,10 +55,10 @@ function App() {
           )}
 
           {/* CTA Section */}
-          <div className="bg-[#00a8e8] text-white rounded-2xl p-8 max-w-lg mx-auto">
-            <h3 className="text-2xl font-bold mb-2">Ready to End the Cycle?</h3>
+          <div className="bg-[#007ea7] text-white rounded-2xl p-8 max-w-lg mx-auto">
+            <h3 className="text-2xl font-bold mb-2 text-white">Ready to Structure Your AI Workflow?</h3>
             <p className="text-blue-100 mb-6">
-              Join the waitlist and be first to experience boardom's intelligent workflow management.
+              Join the waitlist and be first to experience boardom's intelligent prompting pipeline.
             </p>
             <WaitlistForm />
           </div>
@@ -68,12 +68,12 @@ function App() {
       {/* Features Section */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">
+          <h2 className="text-4xl font-bold text-center mb-4 text-[#00171f]">
             Why boardom Changes Everything
           </h2>
           <p className="text-xl text-[#003459] text-center mb-16 max-w-3xl mx-auto">
-            Stop spinning your wheels with repetitive AI prompts. boardom's intelligent Kanban system 
-            guides your development workflow with purpose and precision.
+            Stop spinning your wheels with repetitive AI prompts. boardom's intelligent workflow system 
+            guides your development process with structured prompting pipelines.
           </p>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -85,7 +85,7 @@ function App() {
               </div>
               <h3 className="text-xl font-bold mb-3 text-[#00171f]">Smart Task Generation</h3>
               <p className="text-[#003459]">
-                Transform vague ideas into structured, actionable tasks with AI that understands development workflows.
+                Transform vague ideas into structured, actionable prompts with AI that understands development workflows.
               </p>
             </div>
 
@@ -95,9 +95,9 @@ function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#00171f]">Guided AI Prompts</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#00171f]">Guided Prompting Pipeline</h3>
               <p className="text-[#003459]">
-                Break free from endless prompting circles with contextual, actionable AI guidance tailored to your current task.
+                Break free from endless prompting circles with contextual, structured AI guidance tailored to your workflow stage.
               </p>
             </div>
 
@@ -107,9 +107,9 @@ function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#00171f]">Intelligent Kanban</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#00171f]">Intelligent Workflow</h3>
               <p className="text-[#003459]">
-                Visual workflow management that adapts to your development style and keeps projects moving forward.
+                Visual workflow management that structures your AI development process and keeps projects moving forward.
               </p>
             </div>
           </div>
@@ -119,11 +119,11 @@ function App() {
       {/* Footer */}
       <footer className="bg-[#00171f] text-white py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-4">
-            boardom<span className="inline-block w-2 h-2 bg-white ml-1 mb-1"></span>
+          <h3 className="text-2xl font-bold mb-4 text-white flex items-end justify-center">
+            boardom<span className="inline-block w-2 h-2 bg-white ml-1 mb-0.5"></span>
           </h3>
           <p className="text-gray-300 mb-6">
-            AI-powered workflow management for the modern developer.
+            AI-powered workflow management for structured development.
           </p>
           <div className="flex justify-center space-x-6">
             <a 
@@ -137,7 +137,7 @@ function App() {
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700">
             <p className="text-gray-400 text-sm">
-              © 2025 boardom. Built to eliminate the boredom of endless AI prompting.
+              © 2025 boardom. Built to structure AI development workflows.
             </p>
           </div>
         </div>

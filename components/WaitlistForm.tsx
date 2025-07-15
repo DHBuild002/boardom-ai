@@ -60,7 +60,7 @@ export const WaitlistForm: React.FC = () => {
         <Button 
           type="submit" 
           disabled={isLoading || !email.trim()}
-          className="w-full !py-4 !text-lg !bg-white !text-[#00a8e8] !border-2 !border-white hover:!bg-blue-50 hover:!text-[#003459]"
+          className="w-full !py-4 !text-lg !bg-white !text-[#007ea7] !border-2 !border-white hover:!bg-gray-50 hover:!text-[#003459]"
         >
           {isLoading ? 'Joining Waitlist...' : 'Join Waitlist'}
         </Button>
