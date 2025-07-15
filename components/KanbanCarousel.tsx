@@ -76,13 +76,13 @@ export const KanbanCarousel: React.FC = () => {
           <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">TODO</h3>
             <div className="space-y-4">
-              <div className="moving-card bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4">
+              <div className="moving-card bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4 z-50">
                 Build user authentication
               </div>
-              <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs">
+              <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
                 Add database schema
               </div>
-              <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs">
+              <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
                 Create API endpoints
               </div>
             </div>
@@ -91,7 +91,7 @@ export const KanbanCarousel: React.FC = () => {
           {/* IN PROGRESS Column */}
           <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">IN PROGRESS</h3>
-            <div className="space-y-4">
+            <div className="space-y-4 relative z-10">
               <div className="ai-prompt-card text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4 opacity-0">
                 🤖 Generating AI Prompt...
               </div>
@@ -105,7 +105,7 @@ export const KanbanCarousel: React.FC = () => {
               <div className="completed-card bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4 opacity-0">
                 ✅ Auth implementation ready
               </div>
-              <div className="bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs">
+              <div className="bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs relative z-10">
                 Setup project structure
               </div>
             </div>
