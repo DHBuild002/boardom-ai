@@ -5,60 +5,66 @@ export const KanbanCarousel: React.FC = () => {
     <div className="relative max-w-3xl mx-auto">
       <style>
         {`
-          @keyframes promptFlow1 {
-            0% { transform: translateX(0px); opacity: 1; }
-            20% { transform: translateX(0px); opacity: 1; }
-            40% { transform: translateX(200px); opacity: 0.8; }
-            60% { transform: translateX(200px); opacity: 0.8; }
-            80% { transform: translateX(400px); opacity: 0.6; }
-            100% { transform: translateX(400px); opacity: 0.3; }
-          }
-
-          @keyframes promptFlow2 {
+          @keyframes singleCardFlow {
+            /* Start in TODO */
             0% { transform: translateX(0px); opacity: 1; }
             25% { transform: translateX(0px); opacity: 1; }
-            45% { transform: translateX(200px); opacity: 0.8; }
-            65% { transform: translateX(200px); opacity: 0.8; }
-            85% { transform: translateX(400px); opacity: 0.6; }
-            100% { transform: translateX(400px); opacity: 0.3; }
+            
+            /* Move to IN PROGRESS */
+            35% { transform: translateX(220px); opacity: 1; }
+            45% { transform: translateX(220px); opacity: 1; }
+            
+            /* Move to DONE */
+            55% { transform: translateX(440px); opacity: 1; }
+            75% { transform: translateX(440px); opacity: 1; }
+            
+            /* Fade out in DONE */
+            85% { transform: translateX(440px); opacity: 0.5; }
+            100% { transform: translateX(440px); opacity: 0; }
           }
 
-          @keyframes promptFlow3 {
-            0% { transform: translateX(0px); opacity: 1; }
-            30% { transform: translateX(0px); opacity: 1; }
-            50% { transform: translateX(200px); opacity: 0.8; }
-            70% { transform: translateX(200px); opacity: 0.8; }
-            90% { transform: translateX(400px); opacity: 0.6; }
-            100% { transform: translateX(400px); opacity: 0.3; }
+          @keyframes promptGeneration {
+            /* Hidden initially */
+            0% { transform: scale(1); opacity: 0; border-width: 2px; }
+            34% { transform: scale(1); opacity: 0; border-width: 2px; }
+            
+            /* Appear and emphasize in IN PROGRESS */
+            35% { transform: scale(1.1); opacity: 1; border-width: 3px; }
+            50% { transform: scale(1.1); opacity: 1; border-width: 3px; }
+            
+            /* Return to normal before moving */
+            54% { transform: scale(1); opacity: 1; border-width: 2px; }
+            55% { transform: scale(1); opacity: 0; border-width: 2px; }
+            100% { transform: scale(1); opacity: 0; border-width: 2px; }
           }
 
-          @keyframes cardAppear {
-            0% { transform: translateY(10px); opacity: 0; }
-            100% { transform: translateY(0px); opacity: 1; }
+          @keyframes completedTask {
+            /* Hidden initially */
+            0% { opacity: 0; }
+            54% { opacity: 0; }
+            
+            /* Appear in DONE */
+            55% { opacity: 1; }
+            75% { opacity: 1; }
+            
+            /* Fade out */
+            85% { opacity: 0.5; }
+            100% { opacity: 0; }
           }
 
-          .prompt-flow-1 {
-            animation: promptFlow1 9s ease-in-out 0s infinite;
+          .moving-card {
+            animation: singleCardFlow 12s ease-in-out infinite;
           }
 
-          .prompt-flow-2 {
-            animation: promptFlow2 9s ease-in-out 3s infinite;
+          .ai-prompt-card {
+            animation: promptGeneration 12s ease-in-out infinite;
+            background: linear-gradient(135deg, #10219F, #FE5F55);
+            border: 3px solid transparent;
+            background-clip: padding-box;
           }
 
-          .prompt-flow-3 {
-            animation: promptFlow3 9s ease-in-out 6s infinite;
-          }
-
-          .card-appear-1 {
-            animation: cardAppear 0.5s ease-out 3s both;
-          }
-
-          .card-appear-2 {
-            animation: cardAppear 0.5s ease-out 6s both;
-          }
-
-          .card-appear-3 {
-            animation: cardAppear 0.5s ease-out 9s both;
+          .completed-card {
+            animation: completedTask 12s ease-in-out infinite;
           }
         `}
       </style>
@@ -67,46 +73,40 @@ export const KanbanCarousel: React.FC = () => {
       <div className="bg-[#BDD5EA] bg-opacity-20 rounded-xl p-6 mb-8">
         <div className="grid grid-cols-3 gap-6">
           {/* TODO Column */}
-          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA]">
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">TODO</h3>
             <div className="space-y-4">
-              <div className="prompt-flow-1 bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium">
-                Build user auth
+              <div className="moving-card bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4">
+                Build user authentication
               </div>
               <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs">
-                Add database
+                Add database schema
               </div>
               <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs">
-                Create API
+                Create API endpoints
               </div>
             </div>
           </div>
 
           {/* IN PROGRESS Column */}
-          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA]">
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">IN PROGRESS</h3>
             <div className="space-y-4">
-              <div className="card-appear-1 bg-[#FE5F55] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium opacity-0">
-                Build user auth
-              </div>
-              <div className="prompt-flow-2 bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium">
-                Add database
+              <div className="ai-prompt-card text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4 opacity-0">
+                🤖 Generating AI Prompt...
               </div>
             </div>
           </div>
 
           {/* DONE Column */}
-          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA]">
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[220px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">DONE</h3>
             <div className="space-y-4">
-              <div className="card-appear-2 bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium opacity-0">
-                Add database
-              </div>
-              <div className="prompt-flow-3 bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium">
-                Create API
+              <div className="completed-card bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium absolute top-16 left-4 right-4 opacity-0">
+                ✅ Auth implementation ready
               </div>
               <div className="bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs">
-                Setup project
+                Setup project structure
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ export const KanbanCarousel: React.FC = () => {
 
       {/* Caption */}
       <p className="text-center text-[#000000] opacity-80 font-medium">
-        Transform vague prompts into structured AI workflows that eliminate endless circles
+        Transform tasks into structured AI prompts that guide your development workflow
       </p>
     </div>
   );
