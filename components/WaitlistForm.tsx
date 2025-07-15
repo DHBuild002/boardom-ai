@@ -67,7 +67,7 @@ export const WaitlistForm: React.FC = () => {
       </form>
 
       <p className="text-gray-400 text-sm text-center mt-4">
-        We'll notify you when Bahn is ready for early access.
+        We'll notify you when boardom is ready for early access.
       </p>
     </div>
   );

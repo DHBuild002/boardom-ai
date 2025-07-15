@@ -13,7 +13,7 @@ function App() {
         <div className="text-center max-w-4xl mx-auto">
           {/* Logo */}
           <h1 className="text-8xl md:text-9xl font-black tracking-tighter mb-6">
-            Bahn<span className="text-red-600">.</span>
+            boardom<span className="inline-block w-4 h-4 bg-black ml-1 mb-2"></span>
           </h1>
 
           {/* Tagline */}
@@ -45,7 +45,7 @@ function App() {
           <div className="bg-[#1c1c1c] border border-gray-800 rounded-xl p-8 max-w-lg mx-auto">
             <h2 className="text-2xl font-bold mb-2">Get Early Access</h2>
             <p className="text-gray-400 mb-6">
-              Be the first to experience the future of project management.
+              Be the first to experience boardom and revolutionize your workflow.
             </p>
             <WaitlistForm />
           </div>
@@ -56,7 +56,7 @@ function App() {
       <div className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-16">
-            Why Choose Bahn?
+            Why Choose boardom?
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
