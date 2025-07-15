@@ -152,7 +152,7 @@ export const KanbanCarousel: React.FC = () => {
                 Add database schema
               </div>
               <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
-            <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
+                Create API endpoints
               </div>
             </div>
           </div>
@@ -187,5 +187,4 @@ export const KanbanCarousel: React.FC = () => {
       </p>
     </div>
   );
-  )
-}
+};
