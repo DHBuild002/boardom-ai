@@ -45,58 +45,58 @@ export const KanbanCarousel: React.FC = () => {
       </style>
 
       {/* Workflow Board */}
-      <div className="bg-gray-100 rounded-xl p-6 mb-8">
+      <div className="bg-[#BDD5EA] bg-opacity-20 rounded-xl p-6 mb-8">
         <div className="grid grid-cols-4 gap-4">
           {/* Prompt Ideas Column */}
-          <div className="bg-white rounded-lg p-4 min-h-[200px]">
-            <h3 className="font-bold text-[#003459] mb-4 text-center text-sm">Prompt Ideas</h3>
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[200px] border border-[#BDD5EA]">
+            <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">Prompt Ideas</h3>
             <div className="space-y-3">
-              <div className="prompt-flow-1 bg-[#007ea7] text-white p-3 rounded-lg text-xs font-medium">
+              <div className="prompt-flow-1 bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium">
                 "Build user auth"
               </div>
-              <div className="bg-gray-200 p-3 rounded-lg text-xs">
+              <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs">
                 "Add database"
               </div>
-              <div className="bg-gray-200 p-3 rounded-lg text-xs">
+              <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs">
                 "Create API"
               </div>
             </div>
           </div>
 
           {/* Structured Prompts Column */}
-          <div className="bg-white rounded-lg p-4 min-h-[200px]">
-            <h3 className="font-bold text-[#003459] mb-4 text-center text-sm">Structured</h3>
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[200px] border border-[#BDD5EA]">
+            <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">Structured</h3>
             <div className="space-y-3">
-              <div className="card-appear-1 bg-[#00a8e8] text-white p-3 rounded-lg text-xs font-medium opacity-0">
+              <div className="card-appear-1 bg-[#FE5F55] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium opacity-0">
                 "Build user auth"
               </div>
-              <div className="prompt-flow-2 bg-[#007ea7] text-white p-3 rounded-lg text-xs font-medium">
+              <div className="prompt-flow-2 bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium">
                 "Add database"
               </div>
             </div>
           </div>
 
           {/* AI Processing Column */}
-          <div className="bg-white rounded-lg p-4 min-h-[200px]">
-            <h3 className="font-bold text-[#003459] mb-4 text-center text-sm">AI Processing</h3>
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[200px] border border-[#BDD5EA]">
+            <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">AI Processing</h3>
             <div className="space-y-3">
-              <div className="card-appear-2 bg-[#003459] text-white p-3 rounded-lg text-xs font-medium opacity-0">
+              <div className="card-appear-2 bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium opacity-0">
                 "Add database"
               </div>
-              <div className="prompt-flow-3 bg-[#007ea7] text-white p-3 rounded-lg text-xs font-medium">
+              <div className="prompt-flow-3 bg-[#10219F] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium">
                 "Create API"
               </div>
             </div>
           </div>
 
           {/* Completed Column */}
-          <div className="bg-white rounded-lg p-4 min-h-[200px]">
-            <h3 className="font-bold text-[#003459] mb-4 text-center text-sm">Completed</h3>
+          <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[200px] border border-[#BDD5EA]">
+            <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">Completed</h3>
             <div className="space-y-3">
-              <div className="card-appear-3 bg-green-600 text-white p-3 rounded-lg text-xs font-medium opacity-0">
+              <div className="card-appear-3 bg-[#FE5F55] text-[#F7F7FF] p-3 rounded-lg text-xs font-medium opacity-0">
                 "Create API"
               </div>
-              <div className="bg-green-500 text-white p-3 rounded-lg text-xs">
+              <div className="bg-[#FE5F55] text-[#F7F7FF] p-3 rounded-lg text-xs">
                 "Setup project"
               </div>
             </div>
@@ -105,7 +105,7 @@ export const KanbanCarousel: React.FC = () => {
       </div>
 
       {/* Caption */}
-      <p className="text-center text-[#003459] font-medium">
+      <p className="text-center text-[#000000] opacity-80 font-medium">
         Transform vague prompts into structured AI workflows that eliminate endless circles
       </p>
     </div>
