@@ -107,7 +107,7 @@ export const KanbanCarousel: React.FC = () => {
               gradientBorder 4s ease-in-out infinite,
               cardBackground 4s ease-in-out infinite;
             position: absolute;
-            top: 104px;
+            top: 148px;
             left: 16px;
             width: 180px;
             height: 40px;
@@ -126,7 +126,7 @@ export const KanbanCarousel: React.FC = () => {
           .floating-text {
             animation: floatingText 4s ease-in-out infinite;
             position: absolute;
-            top: 20px;
+            top: 64px;
             left: 16px;
             width: 180px;
             z-index: 101;
@@ -152,7 +152,7 @@ export const KanbanCarousel: React.FC = () => {
                 Add database schema
               </div>
               <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
-                Create API endpoints
+            <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
               </div>
             </div>
           </div>
