@@ -26,3 +26,4 @@ dist-ssr
 Key Files
 /firebaseConfig.ts
 /authConfig.ts
+.env
