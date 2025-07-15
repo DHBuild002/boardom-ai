@@ -1,171 +1,95 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Header } from './components/Header';
-import { KanbanBoard } from './components/KanbanBoard';
-import { NewTaskGenerator } from './components/NewTaskGenerator';
-import { LoginScreen } from './components/LoginScreen';
-import { generateTasks, isApiConfigured } from './services/geminiService';
-import { onAuthChange, logout, saveBoardToFirestore, loadBoardFromFirestore } from './services/userService';
-import { initialBoard } from './data/initialData';
-import type { Board, Task } from './types';
-
-const LoadingScreen: React.FC<{ message: string }> = ({ message }) => (
-    <div className="min-h-screen flex items-center justify-center bg-[#101010]">
-        <p className="text-white text-xl animate-pulse">{message}</p>
-    </div>
-);
+import React from 'react';
+import { WaitlistForm } from './components/WaitlistForm';
+import { AnimatedWorkflowIcon } from './components/icons';
+import { isFirebaseConfigured } from './firebaseConfig';
 
 function App() {
-  const [board, setBoard] = useState<Board>(initialBoard);
-  const [isLoadingTasks, setIsLoadingTasks] = useState(false);
-  const [apiConfigured] = useState(() => isApiConfigured());
-  const [authState, setAuthState] = useState<{
-    isLoading: boolean;
-    user: { uid: string; email: string | null; } | null;
-  }>({
-    isLoading: true,
-    user: null,
-  });
-
-  const isInitialLoad = useRef(true);
-
-  // Handle Firebase auth state changes
-  useEffect(() => {
-    const unsubscribe = onAuthChange(async (user) => {
-      if (user) {
-        setAuthState({ isLoading: true, user });
-        const userBoard = await loadBoardFromFirestore(user.uid);
-        setBoard(userBoard || initialBoard);
-        isInitialLoad.current = true; // Flag to prevent immediate save on load
-        setAuthState({ isLoading: false, user });
-      } else {
-        setAuthState({ isLoading: false, user: null });
-        setBoard(initialBoard);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-  
-  // Save board to Firestore whenever it changes
-  useEffect(() => {
-    if (authState.user && !authState.isLoading) {
-      if (isInitialLoad.current) {
-        // Skip the very first effect run after loading data
-        isInitialLoad.current = false;
-        return;
-      }
-      saveBoardToFirestore(authState.user.uid, board);
-    }
-  }, [board, authState.user, authState.isLoading]);
-
-  const handleLogout = () => {
-    logout();
-  };
-  
-  const handleGenerateTasks = useCallback(async (prompt: string, type: 'single' | 'full') => {
-    setIsLoadingTasks(true);
-    const newTasksData = await generateTasks(prompt, type);
-    
-    setBoard(prevBoard => {
-      const newTasks: Record<string, Task> = {};
-      const newTaskIds: string[] = [];
-
-      newTasksData.forEach((taskData, index) => {
-        if (taskData.title === 'Configuration Error' || taskData.title === 'AI Generation Failed') {
-            alert(`${taskData.title}: ${taskData.description}`);
-            return;
-        }
-        const id = `task-${Date.now()}-${index}`;
-        newTasks[id] = { id, ...taskData };
-        newTaskIds.push(id);
-      });
-      
-      if(newTaskIds.length === 0) {
-        setIsLoadingTasks(false);
-        return prevBoard;
-      }
-
-      const todoColumn = prevBoard.columns['todo'];
-      
-      return {
-        ...prevBoard,
-        tasks: { ...prevBoard.tasks, ...newTasks },
-        columns: {
-          ...prevBoard.columns,
-          'todo': {
-            ...todoColumn,
-            taskIds: [...newTaskIds, ...todoColumn.taskIds]
-          }
-        }
-      };
-    });
-
-    setIsLoadingTasks(false);
-  }, []);
-
-  const moveTask = useCallback((taskId: string, targetColumnId: string) => {
-    setBoard(prevBoard => {
-        const newBoard = JSON.parse(JSON.stringify(prevBoard));
-        let sourceColumnId: string | null = null;
-        
-        // Find source column and remove task
-        for (const colId of newBoard.columnOrder) {
-            const column = newBoard.columns[colId];
-            const taskIndex = column.taskIds.indexOf(taskId);
-            if (taskIndex > -1) {
-                sourceColumnId = colId;
-                column.taskIds.splice(taskIndex, 1);
-                break;
-            }
-        }
-
-        if (!sourceColumnId) return prevBoard;
-
-        // Add task to target column
-        const targetColumn = newBoard.columns[targetColumnId];
-        targetColumn.taskIds.push(taskId);
-        
-        return newBoard;
-    });
-  }, []);
-
-  const updateTask = useCallback((updatedTask: Task) => {
-    setBoard(prevBoard => ({
-      ...prevBoard,
-      tasks: {
-        ...prevBoard.tasks,
-        [updatedTask.id]: updatedTask
-      }
-    }));
-  }, []);
-
-  const handleResetBoard = useCallback(() => {
-    if (window.confirm('Are you sure you want to reset the board? All tasks will be permanently removed.')) {
-        setBoard(initialBoard);
-    }
-  }, []);
-
-  if (authState.isLoading) {
-    return <LoadingScreen message="Loading session..." />;
-  }
-
-  if (!authState.user) {
-    return <LoginScreen />;
-  }
+  const firebaseConfigured = isFirebaseConfigured();
 
   return (
     <div className="min-h-screen bg-[#101010] text-white">
-      <Header onLogout={handleLogout} onResetBoard={handleResetBoard} user={authState.user} />
-      <main>
-        {!apiConfigured && (
-            <div className="p-4 text-center bg-yellow-900/50 text-yellow-300">
-                Warning: Gemini API key is not configured. AI features will not work.
+      {/* Hero Section */}
+      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+        <div className="text-center max-w-4xl mx-auto">
+          {/* Logo */}
+          <h1 className="text-8xl md:text-9xl font-black tracking-tighter mb-6">
+            Bahn<span className="text-red-600">.</span>
+          </h1>
+
+          {/* Tagline */}
+          <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
+            The AI-powered Kanban board
+          </p>
+          
+          <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            Streamline your development workflow with intelligent task generation, 
+            actionable AI prompts, and seamless project management.
+          </p>
+
+          {/* Animated Demo */}
+          <div className="mb-12">
+            <AnimatedWorkflowIcon />
+          </div>
+
+          {/* Configuration Warning */}
+          {!firebaseConfigured && (
+            <div className="bg-amber-900/50 text-amber-300 p-4 rounded-lg mb-8 max-w-md mx-auto">
+              <p className="font-bold mb-2">⚠️ Configuration Required</p>
+              <p className="text-sm">
+                Please update your Firebase configuration in <code>firebaseConfig.ts</code> to enable waitlist functionality.
+              </p>
             </div>
-        )}
-        <NewTaskGenerator onGenerate={handleGenerateTasks} isLoading={isLoadingTasks} />
-        <KanbanBoard board={board} moveTask={moveTask} updateTask={updateTask} />
-      </main>
-      <footer className="text-center p-6 text-gray-600 text-sm">
-        <p>Powered by Gemini API. Built for the modern developer.</p>
+          )}
+
+          {/* Waitlist Form */}
+          <div className="bg-[#1c1c1c] border border-gray-800 rounded-xl p-8 max-w-lg mx-auto">
+            <h2 className="text-2xl font-bold mb-2">Get Early Access</h2>
+            <p className="text-gray-400 mb-6">
+              Be the first to experience the future of project management.
+            </p>
+            <WaitlistForm />
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16">
+            Why Choose Bahn?
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-[#1c1c1c] border border-gray-800 rounded-lg p-6 text-center">
+              <div className="text-red-500 text-4xl mb-4">🤖</div>
+              <h3 className="text-xl font-bold mb-3">AI-Powered Tasks</h3>
+              <p className="text-gray-400">
+                Generate comprehensive project backlogs from simple descriptions using advanced AI.
+              </p>
+            </div>
+
+            <div className="bg-[#1c1c1c] border border-gray-800 rounded-lg p-6 text-center">
+              <div className="text-red-500 text-4xl mb-4">⚡</div>
+              <h3 className="text-xl font-bold mb-3">Smart Prompts</h3>
+              <p className="text-gray-400">
+                Get actionable, context-aware prompts to accelerate your development workflow.
+              </p>
+            </div>
+
+            <div className="bg-[#1c1c1c] border border-gray-800 rounded-lg p-6 text-center">
+              <div className="text-red-500 text-4xl mb-4">🎯</div>
+              <h3 className="text-xl font-bold mb-3">Seamless Flow</h3>
+              <p className="text-gray-400">
+                Intuitive Kanban interface designed for modern development teams.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="text-center p-6 text-gray-600 text-sm border-t border-gray-800">
+        <p>Powered by AI. Built for the modern developer.</p>
       </footer>
     </div>
   );
