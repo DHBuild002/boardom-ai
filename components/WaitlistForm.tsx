@@ -66,7 +66,7 @@ export const WaitlistForm: React.FC = () => {
         </Button>
       </form>
 
-      <p className="text-gray-400 text-sm text-center mt-4">
+      <p className="text-gray-400 text-sm text-center mt-4"></p>
       <p className="text-[#BDD5EA] text-sm text-center mt-4">
         We'll notify you when boardom is ready for early access.
       </p>
