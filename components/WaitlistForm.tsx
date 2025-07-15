@@ -41,7 +41,7 @@ export const WaitlistForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
-            className="w-full bg-[#1c1c1c] border border-gray-700 text-gray-200 rounded-lg p-4 text-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+            className="w-full bg-white border border-blue-200 text-[#00171f] rounded-lg p-4 text-lg focus:ring-2 focus:ring-[#007ea7] focus:border-[#007ea7] transition-all placeholder-gray-400"
             disabled={isLoading}
             required
           />
@@ -50,8 +50,8 @@ export const WaitlistForm: React.FC = () => {
         {message && (
           <div className={`p-3 rounded-lg text-sm ${
             message.type === 'success' 
-              ? 'bg-green-900/50 text-green-300 border border-green-700' 
-              : 'bg-red-900/50 text-red-300 border border-red-700'
+              ? 'bg-green-50 text-green-700 border border-green-200' 
+              : 'bg-red-50 text-red-700 border border-red-200'
           }`}>
             {message.text}
           </div>
@@ -60,7 +60,7 @@ export const WaitlistForm: React.FC = () => {
         <Button 
           type="submit" 
           disabled={isLoading || !email.trim()}
-          className="w-full !py-4 !text-lg"
+          className="w-full !py-4 !text-lg !bg-white !text-[#00a8e8] !border-2 !border-white hover:!bg-blue-50 hover:!text-[#003459]"
         >
           {isLoading ? 'Joining Waitlist...' : 'Join Waitlist'}
         </Button>
