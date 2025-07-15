@@ -1,6 +1,6 @@
 import React from 'react';
 import { WaitlistForm } from './components/WaitlistForm';
-import { KanbanCarousel } from './components/KanbanCarousel';
+import { KanbanCarousel } from './components/KanbanCarousel.tsx';
 import { isFirebaseConfigured } from './firebaseConfig';
 
 function App() {
