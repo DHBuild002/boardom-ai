@@ -22,7 +22,7 @@ export const KanbanCarousel: React.FC = () => {
               opacity: 1;
             }
 
-            /* Phase 3: Stay in IN PROGRESS with effects (37.5-87.5%) */
+            /* Phase 3: Stay in IN PROGRESS (37.5-87.5%) */
             87.5% { 
               transform: translateX(220px); 
               opacity: 1;
@@ -38,39 +38,39 @@ export const KanbanCarousel: React.FC = () => {
           @keyframes gradientBorder {
             /* No border in TODO */
             0% { 
-              border: 2px solid transparent;
+              border: 2px solid #BDD5EA;
               box-shadow: none;
             }
             25% { 
-              border: 2px solid transparent;
+              border: 2px solid #BDD5EA;
               box-shadow: none;
             }
 
-            /* Gradient border appears in IN PROGRESS */
+            /* Pulsing gradient border in IN PROGRESS */
             37.5% { 
               border: 3px solid #FF6B6B;
-              box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+              box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
             }
             50% { 
               border: 3px solid #4ECDC4;
-              box-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
+              box-shadow: 0 0 15px rgba(78, 205, 196, 0.4);
             }
             62.5% { 
               border: 3px solid #FF6B6B;
-              box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+              box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
             }
             75% { 
               border: 3px solid #4ECDC4;
-              box-shadow: 0 0 15px rgba(78, 205, 196, 0.3);
+              box-shadow: 0 0 15px rgba(78, 205, 196, 0.4);
             }
             87.5% { 
               border: 3px solid #FF6B6B;
-              box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+              box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
             }
 
-            /* Border disappears in DONE */
+            /* Normal border in DONE */
             100% { 
-              border: 2px solid transparent;
+              border: 2px solid #000000;
               box-shadow: none;
             }
           }
@@ -88,10 +88,24 @@ export const KanbanCarousel: React.FC = () => {
             100% { opacity: 0; transform: translateY(10px); }
           }
 
+          @keyframes cardBackground {
+            /* Blue background in TODO */
+            0% { background: #10219F; color: #F7F7FF; }
+            25% { background: #10219F; color: #F7F7FF; }
+
+            /* Stays blue in IN PROGRESS */
+            37.5% { background: #10219F; color: #F7F7FF; }
+            87.5% { background: #10219F; color: #F7F7FF; }
+
+            /* Black background in DONE */
+            100% { background: #000000; color: #F7F7FF; }
+          }
+
           .moving-card {
             animation: 
               cardMovement 4s ease-in-out infinite,
-              gradientBorder 4s ease-in-out infinite;
+              gradientBorder 4s ease-in-out infinite,
+              cardBackground 4s ease-in-out infinite;
             position: absolute;
             top: 64px;
             left: 16px;
@@ -103,11 +117,10 @@ export const KanbanCarousel: React.FC = () => {
             font-size: 12px;
             font-weight: 500;
             text-align: center;
-            background: #10219F;
-            color: #F7F7FF;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
           }
 
           .floating-text {
@@ -134,7 +147,7 @@ export const KanbanCarousel: React.FC = () => {
           <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[180px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">TODO</h3>
             <div className="space-y-3">
-              {/* Static cards */}
+              {/* Static cards in TODO only */}
               <div className="bg-[#BDD5EA] bg-opacity-50 text-[#000000] p-3 rounded-lg text-xs relative z-10">
                 Add database schema
               </div>
@@ -144,29 +157,16 @@ export const KanbanCarousel: React.FC = () => {
             </div>
           </div>
 
-          {/* IN PROGRESS Column */}
+          {/* IN PROGRESS Column - Empty for animation */}
           <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[180px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">IN PROGRESS</h3>
-            <div className="space-y-3">
-              {/* Static card */}
-              <div className="bg-[#FE5F55] bg-opacity-80 text-[#F7F7FF] p-3 rounded-lg text-xs relative z-10">
-                Setup authentication
-              </div>
-            </div>
+            {/* Empty - card will move here */}
           </div>
 
-          {/* DONE Column */}
+          {/* DONE Column - Empty for animation */}
           <div className="bg-[#F7F7FF] rounded-lg p-4 min-h-[180px] border border-[#BDD5EA] relative">
             <h3 className="font-bold text-[#000000] mb-4 text-center text-sm">DONE</h3>
-            <div className="space-y-3">
-              {/* Static cards */}
-              <div className="bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs relative z-10">
-                Setup project structure
-              </div>
-              <div className="bg-[#000000] text-[#F7F7FF] p-3 rounded-lg text-xs relative z-10">
-                Configure build tools
-              </div>
-            </div>
+            {/* Empty - card will move here */}
           </div>
         </div>
 
