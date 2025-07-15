@@ -11,8 +11,8 @@ function App() {
       {/* Header */}
       <header className="px-6 py-4 border-b border-[#BDD5EA]">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-end">
-            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1 mb-0.5"></span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-baseline">
+            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1"></span>
           </h1>
           <a 
             href="https://x.com/totalboardom" 
