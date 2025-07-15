@@ -187,3 +187,5 @@ export const KanbanCarousel: React.FC = () => {
       </p>
     </div>
   );
+  )
+}
