@@ -107,7 +107,7 @@ export const KanbanCarousel: React.FC = () => {
               gradientBorder 4s ease-in-out infinite,
               cardBackground 4s ease-in-out infinite;
             position: absolute;
-            top: 64px;
+            top: 104px;
             left: 16px;
             width: 180px;
             height: 40px;
