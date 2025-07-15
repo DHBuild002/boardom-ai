@@ -3,7 +3,7 @@ import { Button } from './common/Button';
 import { AnimatedWorkflowIcon } from './icons';
 import { Login } from './auth/Login';
 import { SignUp } from './auth/SignUp';
-import { isFirebaseConfigured } from '../../firebaseConfig';
+import { isFirebaseConfigured } from '../firebaseConfig';
 
 type AuthMode = 'login' | 'signup';
 
