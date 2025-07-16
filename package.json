@@ -1,5 +1,6 @@
 {
   "name": "boardom",
+  "homepage": "https://www.totalboardom.co.uk", 
   "private": true,
   "version": "0.0.0",
   "type": "module",
