@@ -13,14 +13,6 @@ function App() {
           <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-baseline">
             boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1"></span>
           </h1>
-          <a 
-            href="https://x.com/totalboardom" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-[#10219F] hover:text-[#000000] transition-colors font-medium"
-          >
-            Follow @totalboardom
-          </a>
         </div>
       </header>
 
@@ -113,8 +105,8 @@ function App() {
       {/* Footer */}
       <footer className="bg-[#000000] text-[#F7F7FF] py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-4 text-[#F7F7FF] flex items-end justify-center">
-            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1 mb-0.5"></span>
+          <h3 className="text-2xl font-bold mb-4 text-[#F7F7FF] flex items-baseline justify-center">
+            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1"></span>
           </h3>
           <p className="text-[#BDD5EA] mb-6">
             AI-powered workflow management for structured development.
