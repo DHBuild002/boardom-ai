@@ -1,6 +1,5 @@
 import React from 'react';
 import { WaitlistForm } from './components/WaitlistForm';
-import { KanbanCarousel } from './components/KanbanCarousel.tsx';
 import { isFirebaseConfigured } from './firebaseConfig';
 
 function App() {
@@ -38,11 +37,6 @@ function App() {
             Structure your AI development process with intelligent workflow management 
             that guides prompting to eliminate endless circles.
           </p>
-
-          {/* Dynamic Carousel */}
-          <div className="mb-16">
-            <KanbanCarousel />
-          </div>
 
           {/* Configuration Warning */}
           {!firebaseConfigured && (
