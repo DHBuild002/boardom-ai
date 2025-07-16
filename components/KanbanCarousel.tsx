@@ -6,31 +6,35 @@ export const KanbanCarousel: React.FC = () => {
       <style>
         {`
           @keyframes cardMovement {
-            /* Phase 1: Start in TODO (0-30%) */
+            /* Phase 1: Fade in from top in TODO (0-30%) */
             0% { 
-              transform: translateX(10px); 
+              transform: translateX(10px) translateY(-40px); 
+              opacity: 0;
+            }
+            15% { 
+              transform: translateX(10px) translateY(0px); 
               opacity: 1;
             }
             30% { 
-              transform: translateX(10px); 
+              transform: translateX(10px) translateY(0px); 
               opacity: 1;
             }
 
             /* Phase 2: Move to IN PROGRESS (30-50%) */
             50% { 
-              transform: translateX(230px); 
+              transform: translateX(230px) translateY(0px); 
               opacity: 1;
             }
 
             /* Phase 3: Stay in IN PROGRESS (50-80%) */
             80% { 
-              transform: translateX(230px); 
+              transform: translateX(230px) translateY(0px); 
               opacity: 1;
             }
 
             /* Phase 4: Move to DONE (80-100%) */
             100% { 
-              transform: translateX(450px); 
+              transform: translateX(450px) translateY(0px); 
               opacity: 1;
             }
           }
@@ -96,18 +100,19 @@ export const KanbanCarousel: React.FC = () => {
           }
 
           @keyframes cardScale {
-            /* Normal size in TODO */
-            0% { transform: translateX(10px) scale(1); }
-            30% { transform: translateX(10px) scale(1); }
+            /* Fade in from top in TODO */
+            0% { transform: translateX(10px) translateY(-40px) scale(1); }
+            15% { transform: translateX(10px) translateY(0px) scale(1); }
+            30% { transform: translateX(10px) translateY(0px) scale(1); }
 
             /* Slightly larger in IN PROGRESS */
-            35% { transform: translateX(230px) scale(1.05); }
-            45% { transform: translateX(230px) scale(1.02); }
-            75% { transform: translateX(230px) scale(1.02); }
-            80% { transform: translateX(230px) scale(1); }
+            35% { transform: translateX(230px) translateY(0px) scale(1.05); }
+            45% { transform: translateX(230px) translateY(0px) scale(1.02); }
+            75% { transform: translateX(230px) translateY(0px) scale(1.02); }
+            80% { transform: translateX(230px) translateY(0px) scale(1); }
 
             /* Normal size in DONE */
-            100% { transform: translateX(450px) scale(1); }
+            100% { transform: translateX(450px) translateY(0px) scale(1); }
           }
 
           .moving-card {
@@ -116,7 +121,7 @@ export const KanbanCarousel: React.FC = () => {
               gradientBorder 6s cubic-bezier(0.4, 0, 0.2, 1) infinite,
               cardBackground 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
             position: absolute;
-            top: 80px;
+            top: 68px;
             left: 16px;
             width: 180px;
             height: 44px;
