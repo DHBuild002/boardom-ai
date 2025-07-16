@@ -112,12 +112,21 @@ function App() {
             AI-powered workflow management for structured development.
           </p>
           <div className="flex justify-center space-x-6">
-            <a 
+            <a
               href="https://x.com/totalboardom" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-[#10219F] hover:text-[#F7F7FF] transition-colors"
+              className="bg-[#F7F7FF] text-[#000000] px-6 py-3 rounded-lg font-semibold hover:bg-[#BDD5EA] transition-all duration-300 flex items-center gap-3 border border-[#BDD5EA]"
             >
+              <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+                className="text-[#000000]"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
               Follow on X
             </a>
           </div>
