@@ -11,9 +11,9 @@ export const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', c
   const baseStyles = 'px-4 py-2 rounded-md font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#101010]';
 
   const variantStyles = {
-    primary: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-gray-500 disabled:cursor-not-allowed',
-    secondary: 'bg-gray-700 text-gray-200 hover:bg-gray-600 focus:ring-gray-500',
-    ghost: 'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white focus:ring-gray-500'
+    primary: 'bg-[#10219F] text-[#F7F7FF] hover:bg-[#000000] focus:ring-[#10219F] disabled:bg-[#BDD5EA] disabled:cursor-not-allowed',
+    secondary: 'bg-[#FE5F55] text-[#F7F7FF] hover:bg-[#10219F] focus:ring-[#FE5F55]',
+    ghost: 'bg-transparent text-[#000000] hover:bg-[#BDD5EA] hover:text-[#000000] focus:ring-[#10219F]'
   };
 
   return (
