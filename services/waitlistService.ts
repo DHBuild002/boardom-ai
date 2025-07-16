@@ -8,7 +8,7 @@ export interface WaitlistEntry {
 }
 
 export const addToWaitlist = async (email: string): Promise<{ success: boolean; message: string }> => {
-  if (!isFirebaseConfigured()) {
+  if (!firestore) {
     return {
       success: false,
       message: "Firebase is not configured. Please add your Firebase configuration."
