@@ -6,13 +6,13 @@ import type { Task } from '../types';
  * @returns {boolean} True if the API key is set, false otherwise.
  */
 export const isApiConfigured = (): boolean => {
-  const apiKey = process.env.API_KEY;
+  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
   return !!apiKey && apiKey.length > 0;
 };
 
 
 if (!isApiConfigured()) {
-  console.error("API_KEY environment variable not set. The application will not be able to connect to AI services.");
+  console.warn("Gemini API key not configured. AI features will show fallback messages.");
 }
 
 // Initialize AI with a function to avoid early execution error if env is not set.
@@ -20,7 +20,8 @@ const getAi = () => {
     if (!isApiConfigured()) {
         return null;
     }
-    return new GoogleGenAI({ apiKey: process.env.API_KEY! });
+    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+    return new GoogleGenAI({ apiKey: apiKey! });
 }
 
 const taskSchema = {

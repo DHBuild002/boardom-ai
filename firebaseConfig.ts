@@ -18,6 +18,13 @@ const firebaseConfig = {
  * Note: Firebase client config is meant to be public - these are not secret values
  */
 export const isFirebaseConfigured = (): boolean => {
+  // Return false if any config value is undefined, null, or empty
+  if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.projectId || 
+      !firebaseConfig.storageBucket || !firebaseConfig.messagingSenderId || !firebaseConfig.appId) {
+    return false;
+  }
+  
+  // Check for placeholder values that indicate incomplete configuration
   const hasAllRequiredFields = !!(
     firebaseConfig.apiKey &&
     firebaseConfig.authDomain &&
@@ -30,6 +37,8 @@ export const isFirebaseConfigured = (): boolean => {
   const hasValidValues = !!(
     firebaseConfig.apiKey !== 'your-actual-api-key' &&
     firebaseConfig.projectId !== 'your-actual-project-id' &&
+    firebaseConfig.apiKey !== 'undefined' &&
+    firebaseConfig.projectId !== 'undefined' &&
     firebaseConfig.apiKey.length > 10 &&
     firebaseConfig.projectId.length > 3
   );
@@ -45,12 +54,12 @@ if (isFirebaseConfigured()) {
   try {
     app = initializeApp(firebaseConfig);
     firestore = getFirestore(app);
-    console.log('Firebase initialized successfully');
+    console.log('Firebase initialized successfully for project:', firebaseConfig.projectId);
   } catch (error) {
-    console.error('Error initializing Firebase:', error);
+    console.warn('Error initializing Firebase:', error);
   }
 } else {
-  console.warn('Firebase not configured. Missing or invalid environment variables.');
+  console.warn('Firebase not configured. Waitlist functionality will be disabled.');
 }
 
 export { firestore };

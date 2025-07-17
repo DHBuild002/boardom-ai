@@ -12,7 +12,3 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
-# Allow Firebase environment variables to be exposed in client build
-[context.production.environment]
-  VITE_FIREBASE_EXPOSE_IN_BUILD = "true"
