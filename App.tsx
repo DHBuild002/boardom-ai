@@ -20,14 +20,11 @@ function App() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-[#000000]">
-            AI Prompts Meet
-            <br />
-            <span className="text-[#10219F]">boardom Workflow</span>
+            End Prompting <span className="text-[#10219F]">boardom</span>. Start Shipping AI Products with Confidence.
           </h2>
           
           <p className="text-xl md:text-2xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
-            Structure your AI development process with intelligent workflow management 
-            that guides prompting to eliminate endless circles.
+            Experience seamless AI project management, where every task leads to a perfectly tailored prompt, saving you time and frustration.
           </p>
 
           {/* Configuration Warning */}
