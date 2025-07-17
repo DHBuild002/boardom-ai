@@ -1,6 +1,5 @@
 {
   "name": "boardom",
-  "homepage": "https://www.totalboardom.co.uk", 
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,7 +16,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
-    "firebase-tools": "^14.10.1",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
   }

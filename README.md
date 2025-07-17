@@ -11,22 +11,26 @@ To enable the waitlist functionality, you need to configure Firebase:
 3. Go to Project Settings > General > Your apps
 4. Click "Add app" and select "Web"
 5. Register your app and copy the configuration object
-6. Replace the placeholder values in `firebaseConfig.ts` with your actual Firebase configuration:
+6. Create a `.env` file in the root directory and add your Firebase configuration:
 
-```javascript
-const firebaseConfig = {
-  apiKey: "your-actual-api-key",
-  authDomain: "your-project-id.firebaseapp.com", 
-  projectId: "your-actual-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "your-actual-sender-id",
-  appId: "your-actual-app-id"
-};
+```env
+VITE_FIREBASE_API_KEY=your-actual-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-project-id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-actual-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your-actual-sender-id
+VITE_FIREBASE_APP_ID=your-actual-app-id
 ```
 
-7. In the Firebase Console, go to Firestore Database
-8. Click "Create database" and choose "Start in test mode"
-9. The waitlist will automatically create a `waitlist` collection when users sign up
+7. Add your Gemini API key to the same `.env` file:
+
+```env
+GEMINI_API_KEY=your-gemini-api-key
+```
+
+8. In the Firebase Console, go to Firestore Database
+9. Click "Create database" and choose "Start in test mode"
+10. The waitlist will automatically create a `waitlist` collection when users sign up
 
 ## Development
 
@@ -34,6 +38,10 @@ const firebaseConfig = {
 npm install
 npm run dev
 ```
+
+## Deployment
+
+This project is configured for deployment to Netlify. The build command is `npm run build` and the publish directory is `dist`.
 
 ## Features
 
