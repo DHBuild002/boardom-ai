@@ -24,7 +24,7 @@ function App() {
           </h2>
           
           <p className="text-xl md:text-2xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
-            Experience seamless AI project management, where every task leads to a perfectly tailored prompt, saving you time and frustration.
+            Prompting the right way can be tough, and focusing your AI can be tricky too. Let AI guide the work, whilst you decide on what's most important, using Kanban methodology.
           </p>
 
           {/* Configuration Warning */}
