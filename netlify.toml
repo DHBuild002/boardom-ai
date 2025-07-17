@@ -1,11 +1,10 @@
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "npm ci && npm run build"
 
 [build.environment]
-  # Disable Netlify's environment variable exposure warnings for Firebase client config
-  # These variables are meant to be public in client-side Firebase applications
   NODE_ENV = "production"
+  NPM_FLAGS = "--production=false"
 
 [[headers]]
   for = "/*"
