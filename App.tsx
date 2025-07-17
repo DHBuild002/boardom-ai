@@ -28,14 +28,7 @@ function App() {
           </p>
 
           {/* Configuration Warning */}
-          {!firebaseConfigured && (
-            <div className="bg-[#FE5F55] bg-opacity-10 border border-[#FE5F55] text-[#000000] p-4 rounded-lg mb-8 max-w-md mx-auto">
-              <p className="font-bold mb-2">⚠️ Configuration Required</p>
-              <p className="text-sm">
-                Please update your Firebase configuration in <code>firebaseConfig.ts</code> to enable waitlist functionality.
-              </p>
-            </div>
-          )}
+          {/* Configuration Warning - Hidden for production */}
 
           {/* CTA Section */}
           <div className="bg-[#10219F] text-[#F7F7FF] rounded-2xl p-8 max-w-lg mx-auto">
