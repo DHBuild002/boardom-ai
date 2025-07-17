@@ -20,7 +20,7 @@ function App() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-[#000000]">
-            Escape Prompting <span className="text-[#10219F]">boardom</span>, and Kanban Your Way to AI Development Success
+            Free Yourself from Prompting <span className="text-[#10219F]">boardom</span>
           </h2>
           
           <p className="text-xl md:text-2xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
