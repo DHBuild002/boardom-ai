@@ -1,0 +1,19 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  # Disable Netlify's environment variable exposure warnings for Firebase client config
+  # These variables are meant to be public in client-side Firebase applications
+  NODE_ENV = "production"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Allow Firebase environment variables to be exposed in client build
+[context.production.environment]
+  VITE_FIREBASE_EXPOSE_IN_BUILD = "true"
