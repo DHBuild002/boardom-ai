@@ -1,27 +1,17 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import type { Task } from '../types';
 
-/**
- * Checks if the Gemini API key is available in the environment.
- * @returns {boolean} True if the API key is set, false otherwise.
- */
 export const isApiConfigured = (): boolean => {
-  const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-  return !!apiKey && apiKey.length > 0;
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  return !!(apiKey && apiKey.length > 10);
 };
 
-
-if (!isApiConfigured()) {
-  console.warn("Gemini API key not configured. AI features will show fallback messages.");
-}
-
-// Initialize AI with a function to avoid early execution error if env is not set.
 const getAi = () => {
-    if (!isApiConfigured()) {
-        return null;
-    }
-    const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
-    return new GoogleGenAI({ apiKey: apiKey! });
+  if (!isApiConfigured()) {
+    return null;
+  }
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  return new GoogleGenAI({ apiKey: apiKey! });
 }
 
 const taskSchema = {
@@ -40,8 +30,8 @@ const taskSchema = {
 };
 
 const configurationErrorTask = {
-    title: "Configuration Error",
-    description: "The application is not configured to connect to the AI service. Please contact an administrator."
+  title: "Configuration Error",
+  description: "The application is not configured to connect to the AI service. Please contact an administrator."
 };
 
 export const generateTasks = async (prompt: string, type: 'single' | 'full'): Promise<Omit<Task, 'id'>[]> => {
@@ -58,15 +48,15 @@ export const generateTasks = async (prompt: string, type: 'single' | 'full'): Pr
   
   try {
     const response: GenerateContentResponse = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: userPrompt,
-        config: {
-            systemInstruction: systemInstruction,
-            responseMimeType: "application/json",
-            responseSchema: type === 'full' 
-                ? { type: Type.ARRAY, items: taskSchema } 
-                : taskSchema,
-        }
+      model: "gemini-2.5-flash",
+      contents: userPrompt,
+      config: {
+        systemInstruction: systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: type === 'full' 
+          ? { type: Type.ARRAY, items: taskSchema } 
+          : taskSchema,
+      }
     });
 
     const jsonText = response.text.trim();
@@ -78,8 +68,7 @@ export const generateTasks = async (prompt: string, type: 'single' | 'full'): Pr
       return [generatedContent] as Omit<Task, 'id'>[];
     }
   } catch (error) {
-    console.error("Error generating tasks:", error);
-    // Return a user-friendly error task
+    console.warn("Error generating tasks:", error);
     return [{
       title: "AI Generation Failed",
       description: "There was an error contacting the AI service. This might be due to an invalid API key or network issues."
@@ -90,7 +79,7 @@ export const generateTasks = async (prompt: string, type: 'single' | 'full'): Pr
 export const generateActionablePrompt = async (task: Task): Promise<string> => {
   const ai = getAi();
   if (!ai) {
-      return "Configuration Error: The application is not configured to connect to the AI service.";
+    return "Configuration Error: The application is not configured to connect to the AI service.";
   }
   
   const systemInstruction = "You are a senior full-stack developer AI assistant. Your goal is to provide a clear, actionable prompt that a developer can use in their IDE or another LLM to complete a specific task. The output should be plain text or markdown, ready to be copied.";
@@ -103,17 +92,17 @@ export const generateActionablePrompt = async (task: Task): Promise<string> => {
 
   try {
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: userPrompt,
-        config: {
-            systemInstruction: systemInstruction,
-            temperature: 0.7,
-        }
+      model: "gemini-2.5-flash",
+      contents: userPrompt,
+      config: {
+        systemInstruction: systemInstruction,
+        temperature: 0.7,
+      }
     });
 
     return response.text;
   } catch (error) {
-    console.error("Error generating actionable prompt:", error);
+    console.warn("Error generating actionable prompt:", error);
     return "Error: Could not generate a prompt. Please try again later.";
   }
 };
