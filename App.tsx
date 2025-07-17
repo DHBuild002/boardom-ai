@@ -1,10 +1,7 @@
 import React from 'react';
 import { WaitlistForm } from './components/WaitlistForm';
-import { isFirebaseConfigured } from './firebaseConfig';
 
 function App() {
-  const firebaseConfigured = isFirebaseConfigured();
-
   return (
     <div className="min-h-screen bg-[#F7F7FF] text-[#000000]">
       {/* Header */}
@@ -28,7 +25,7 @@ function App() {
           </p>
 
           {/* Configuration Warning */}
-          {/* Configuration Warning - Hidden for production */}
+          {/* Configuration handled dynamically */}
 
           {/* CTA Section */}
           <div className="bg-[#10219F] text-[#F7F7FF] rounded-2xl p-8 max-w-lg mx-auto">

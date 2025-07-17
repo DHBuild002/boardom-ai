@@ -6,5 +6,15 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-  },
+    rollupOptions: {
+      external: (id) => {
+        // Don't bundle Firebase if not configured
+        if (id.includes('firebase') && !process.env.VITE_FIREBASE_PROJECT_ID) {
+          return true;
+        }
+        return false;
+      }
+    }
+  }
 });
+</vite.config.ts>

@@ -1,6 +1,3 @@
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { firestore, isFirebaseConfigured } from '../firebaseConfig';
-
 export interface WaitlistEntry {
   email: string;
   timestamp: Date;
@@ -8,14 +5,20 @@ export interface WaitlistEntry {
 }
 
 export const addToWaitlist = async (email: string): Promise<{ success: boolean; message: string }> => {
-  if (!firestore) {
-    return {
-      success: false,
-      message: "Firebase is not configured. Please add your Firebase configuration."
-    };
-  }
-
   try {
+    // Dynamic import to prevent bundling when not needed
+    const { getFirestore } = await import('../firebaseConfig');
+    const firestore = await getFirestore();
+    
+    if (!firestore) {
+      return {
+        success: false,
+        message: "Waitlist is not available at this time."
+      };
+    }
+
+    const { collection, addDoc, query, where, getDocs } = await import('firebase/firestore');
+
     // Check if email already exists
     const waitlistRef = collection(firestore, 'waitlist');
     const q = query(waitlistRef, where('email', '==', email.toLowerCase()));
@@ -42,10 +45,10 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
       message: "Successfully added to waitlist!"
     };
   } catch (error) {
-    console.error("Error adding to waitlist:", error);
+    console.warn("Waitlist service error:", error);
     return {
       success: false,
-      message: "Failed to add to waitlist. Please try again."
+      message: "Unable to join waitlist right now. Please try again later."
     };
   }
 };
