@@ -23,8 +23,8 @@ function App() {
             Free Yourself from Prompting <span className="text-[#10219F]">boardom</span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
-            Prompting the right way can be tough, and focusing your AI can be tricky too. Let AI guide the work, whilst you decide on what's most important, using Kanban methodology.
+          <p className="text-lg md:text-xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
+            Direct your AI effectively. This kanban tool helps you prioritize what's important, letting AI focus on a feature at a time with generative prompting.
           </p>
 
           {/* Configuration Warning */}
