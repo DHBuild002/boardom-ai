@@ -33,25 +33,25 @@ export const WaitlistForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="w-full max-w-sm mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
-            className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-4 text-lg focus:ring-2 focus:ring-[#FE5F55] focus:border-[#FE5F55] transition-all placeholder-gray-400"
+            className="w-full bg-[#F7F7FF] border border-[#BDD5EA] text-[#000000] rounded-lg p-3 text-sm focus:ring-2 focus:ring-[#FE5F55] focus:border-[#FE5F55] transition-all placeholder-gray-500"
             disabled={isLoading}
             required
           />
         </div>
 
         {message && (
-          <div className={`p-3 rounded-lg text-sm ${
+          <div className={`p-2 rounded-lg text-xs ${
             message.type === 'success' 
-              ? 'bg-green-900 bg-opacity-50 text-green-300 border border-green-700' 
-              : 'bg-red-900 bg-opacity-50 text-red-300 border border-red-700'
+              ? 'bg-green-100 text-green-800 border border-green-200' 
+              : 'bg-red-100 text-red-800 border border-red-200'
           }`}>
             {message.text}
           </div>
@@ -60,14 +60,14 @@ export const WaitlistForm: React.FC = () => {
         <Button 
           type="submit" 
           disabled={isLoading || !email.trim()}
-          className="w-full !py-4 !text-lg"
+          className="w-full !py-3 !text-sm"
         >
           {isLoading ? 'Joining Waitlist...' : 'Join Waitlist'}
         </Button>
       </form>
 
-      <p className="text-[#BDD5EA] text-sm text-center mt-4">
-        <span className="text-gray-400">We'll notify you when boardom is ready for early access.</span>
+      <p className="text-[#000000] opacity-60 text-xs text-center mt-3">
+        We'll notify you when boardom is ready for early access.
       </p>
     </div>
   );
