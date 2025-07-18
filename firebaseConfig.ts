@@ -1,9 +1,13 @@
-// Conditional Firebase configuration
-let firestore: any = null;
+// Firebase configuration with improved error handling
+import { initializeApp, FirebaseApp } from 'firebase/app';
+import { getFirestore, Firestore } from 'firebase/firestore';
+
+let firestore: Firestore | null = null;
+let app: FirebaseApp | null = null;
 let isConfigured = false;
 
 // Check if Firebase should be initialized
-const shouldInitializeFirebase = () => {
+const shouldInitializeFirebase = (): boolean => {
   const requiredVars = [
     'VITE_FIREBASE_API_KEY',
     'VITE_FIREBASE_AUTH_DOMAIN', 
@@ -14,28 +18,31 @@ const shouldInitializeFirebase = () => {
   ];
   
   console.log('🔍 Firebase Environment Variables Check:');
-  requiredVars.forEach(varName => {
+  const allPresent = requiredVars.every(varName => {
     const value = import.meta.env[varName];
-    console.log(`${varName}:`, value ? `${value.substring(0, 10)}...` : 'NOT SET');
+    const isPresent = value && value.length > 3 && !value.includes('your-');
+    console.log(`${varName}:`, isPresent ? `${value.substring(0, 10)}...` : 'NOT SET');
+    return isPresent;
   });
 
-  return requiredVars.every(varName => {
-    const value = import.meta.env[varName];
-    return value && value.length > 3 && !value.includes('your-');
-  });
+  console.log('🔧 Firebase configured check:', allPresent);
+  return allPresent;
 };
 
-// Lazy initialization function
-const initializeFirebase = async () => {
-  if (isConfigured || !shouldInitializeFirebase()) {
-    console.log('🚫 Firebase initialization skipped:', { isConfigured, shouldInit: shouldInitializeFirebase() });
+// Initialize Firebase
+const initializeFirebase = (): boolean => {
+  if (isConfigured) {
+    console.log('✅ Firebase already initialized');
+    return true;
+  }
+
+  if (!shouldInitializeFirebase()) {
+    console.log('🚫 Firebase initialization skipped - missing environment variables');
     return false;
   }
 
   try {
-    console.log('🔥 Attempting Firebase initialization...');
-    const { initializeApp } = await import('firebase/app');
-    const { getFirestore } = await import('firebase/firestore');
+    console.log('🔥 Initializing Firebase...');
     
     const firebaseConfig = {
       apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -46,9 +53,10 @@ const initializeFirebase = async () => {
       appId: import.meta.env.VITE_FIREBASE_APP_ID
     };
 
-    const app = initializeApp(firebaseConfig);
+    app = initializeApp(firebaseConfig);
     firestore = getFirestore(app);
     isConfigured = true;
+    
     console.log('✅ Firebase initialized successfully!');
     return true;
   } catch (error) {
@@ -58,15 +66,12 @@ const initializeFirebase = async () => {
 };
 
 export const isFirebaseConfigured = (): boolean => {
-  const configured = shouldInitializeFirebase();
-  console.log('🔧 Firebase configured check:', configured);
-  return configured;
+  return shouldInitializeFirebase();
 };
 
-export const getFirestore = async () => {
+export const getFirestoreInstance = (): Firestore | null => {
   if (!isConfigured) {
-    console.log('🔄 Firebase not configured, attempting initialization...');
-    await initializeFirebase();
+    initializeFirebase();
   }
   console.log('📊 Firestore instance:', firestore ? 'Available' : 'NULL');
   return firestore;

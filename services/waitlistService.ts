@@ -1,3 +1,6 @@
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { getFirestoreInstance } from '../firebaseConfig';
+
 export interface WaitlistEntry {
   email: string;
   timestamp: Date;
@@ -8,24 +11,16 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
   try {
     console.log('📧 Attempting to add email to waitlist:', email);
     
-    // Dynamic import to prevent bundling when not needed
-    const { getFirestore } = await import('../firebaseConfig');
-    const firestore = await getFirestore();
-    
-    console.log('🔍 Firestore instance check:', firestore ? 'Available' : 'NULL');
+    const firestore = getFirestoreInstance();
     
     if (!firestore) {
       console.warn('⚠️ Firestore not available - configuration issue');
       return {
         success: false,
-        message: "Waitlist is not available at this time."
+        message: "Waitlist service is not available at this time. Please try again later."
       };
     }
 
-    console.log('📦 Loading Firestore functions...');
-    const { collection, addDoc, query, where, getDocs } = await import('firebase/firestore');
-
-    // Check if email already exists
     console.log('🔍 Checking for existing email...');
     const waitlistRef = collection(firestore, 'waitlist');
     const q = query(waitlistRef, where('email', '==', email.toLowerCase()));
@@ -39,7 +34,6 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
       };
     }
 
-    // Add new email to waitlist
     console.log('➕ Adding new email to waitlist...');
     const waitlistEntry: WaitlistEntry = {
       email: email.toLowerCase(),
@@ -52,10 +46,27 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
 
     return {
       success: true,
-      message: "Successfully added to waitlist!"
+      message: "Successfully added to waitlist! We'll notify you when boardom is ready."
     };
   } catch (error) {
     console.error("❌ Waitlist service error:", error);
+    
+    // More specific error handling
+    if (error instanceof Error) {
+      if (error.message.includes('permission-denied')) {
+        return {
+          success: false,
+          message: "Access denied. Please check your Firebase security rules."
+        };
+      }
+      if (error.message.includes('network')) {
+        return {
+          success: false,
+          message: "Network error. Please check your internet connection and try again."
+        };
+      }
+    }
+    
     return {
       success: false,
       message: "Unable to join waitlist right now. Please try again later."
