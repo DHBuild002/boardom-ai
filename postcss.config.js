@@ -1,6 +1,6 @@
 // postcss.config.js
 // For ES Modules (if your project uses import/export, like many Vite setups)
-import tailwindcss from 'tailwindcss';
+import tailwindcss from '@tailwindcss/postcss';
 import autoprefixer from 'autoprefixer';
 
 export default {
