@@ -4,4 +4,4 @@
 
 [build.environment]
   NODE_VERSION = "20.11.0"
-  SECRETS_SCAN_OMIT_PATHS = "vite.config.js,.env,dist"
+  SECRETS_SCAN_OMIT_PATHS = "vite.config.js,.env"
