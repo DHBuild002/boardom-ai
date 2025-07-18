@@ -3,12 +3,16 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  css: {
+    postcss: './postcss.config.js',
+  },
   optimizeDeps: {
     exclude: ['firebase', '@google/genai']
   },
   build: {
     outDir: 'dist',
     sourcemap: false,
+    cssCodeSplit: false,
     rollupOptions: {
       external: (id) => {
         // Don't bundle Firebase or Gemini AI if not configured
