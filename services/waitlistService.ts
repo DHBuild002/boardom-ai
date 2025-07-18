@@ -9,8 +9,8 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
   try {
     console.log('📧 Attempting to add email to waitlist:', email);
     
-    // Call serverless function instead of direct Firebase
-    const response = await fetch('/api/waitlist', {
+    // Call Netlify function instead of direct Firebase
+    const response = await fetch('/.netlify/functions/waitlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
     const result = await response.json();
 
     if (!response.ok) {
-      console.warn('⚠️ Waitlist API error:', result.message);
+      console.warn('⚠️ Waitlist function error:', result.message);
       return {
         success: false,
         message: result.message || "Unable to join waitlist right now. Please try again later."
@@ -31,10 +31,10 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
     console.log('✅ Email successfully added to waitlist!');
     return {
       success: true,
-      message: "Successfully added to waitlist! We'll notify you when boardom is ready."
+      message: result.message
     };
   } catch (error) {
-    console.error("❌ Waitlist service error:", error);
+    console.error("❌ Waitlist function error:", error);
     
     return {
       success: false,
