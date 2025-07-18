@@ -3,13 +3,19 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    exclude: ['firebase', '@google/genai']
+  },
   build: {
     outDir: 'dist',
     sourcemap: false,
     rollupOptions: {
       external: (id) => {
-        // Don't bundle Firebase if not configured
+        // Don't bundle Firebase or Gemini AI if not configured
         if (id.includes('firebase') && !process.env.VITE_FIREBASE_PROJECT_ID) {
+          return true;
+        }
+        if (id.includes('@google/genai') && !process.env.VITE_GEMINI_API_KEY) {
           return true;
         }
         return false;
