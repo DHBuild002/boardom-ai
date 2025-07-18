@@ -1,6 +1,4 @@
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { getFirestoreInstance } from '../firebaseConfig';
-
+// Waitlist service without direct Firebase client usage
 export interface WaitlistEntry {
   email: string;
   timestamp: Date;
@@ -11,39 +9,26 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
   try {
     console.log('📧 Attempting to add email to waitlist:', email);
     
-    const firestore = getFirestoreInstance();
-    
-    if (!firestore) {
-      console.warn('⚠️ Firestore not available - configuration issue');
+    // Call serverless function instead of direct Firebase
+    const response = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email.toLowerCase() }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      console.warn('⚠️ Waitlist API error:', result.message);
       return {
         success: false,
-        message: "Waitlist service is not available at this time. Please try again later."
+        message: result.message || "Unable to join waitlist right now. Please try again later."
       };
     }
 
-    console.log('🔍 Checking for existing email...');
-    const waitlistRef = collection(firestore, 'waitlist');
-    const q = query(waitlistRef, where('email', '==', email.toLowerCase()));
-    const querySnapshot = await getDocs(q);
-
-    if (!querySnapshot.empty) {
-      console.log('⚠️ Email already exists in waitlist');
-      return {
-        success: false,
-        message: "This email is already on the waitlist!"
-      };
-    }
-
-    console.log('➕ Adding new email to waitlist...');
-    const waitlistEntry: WaitlistEntry = {
-      email: email.toLowerCase(),
-      timestamp: new Date(),
-      status: 'pending'
-    };
-
-    await addDoc(waitlistRef, waitlistEntry);
     console.log('✅ Email successfully added to waitlist!');
-
     return {
       success: true,
       message: "Successfully added to waitlist! We'll notify you when boardom is ready."
@@ -51,25 +36,9 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
   } catch (error) {
     console.error("❌ Waitlist service error:", error);
     
-    // More specific error handling
-    if (error instanceof Error) {
-      if (error.message.includes('permission-denied')) {
-        return {
-          success: false,
-          message: "Access denied. Please check your Firebase security rules."
-        };
-      }
-      if (error.message.includes('network')) {
-        return {
-          success: false,
-          message: "Network error. Please check your internet connection and try again."
-        };
-      }
-    }
-    
     return {
       success: false,
-      message: "Unable to join waitlist right now. Please try again later."
+      message: "Unable to join waitlist right now. Please check your internet connection and try again."
     };
   }
 };
