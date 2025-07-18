@@ -41,7 +41,7 @@ export const WaitlistForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
-            className="w-full bg-[#F7F7FF] border border-[#BDD5EA] text-[#000000] rounded-lg p-4 text-lg focus:ring-2 focus:ring-[#FE5F55] focus:border-[#FE5F55] transition-all placeholder-gray-500"
+            className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-4 text-lg focus:ring-2 focus:ring-[#FE5F55] focus:border-[#FE5F55] transition-all placeholder-gray-400"
             disabled={isLoading}
             required
           />
@@ -50,8 +50,8 @@ export const WaitlistForm: React.FC = () => {
         {message && (
           <div className={`p-3 rounded-lg text-sm ${
             message.type === 'success' 
-              ? 'bg-[#BDD5EA] bg-opacity-30 text-[#000000] border border-[#BDD5EA]' 
-              : 'bg-[#FE5F55] bg-opacity-20 text-[#000000] border border-[#FE5F55]'
+              ? 'bg-green-900 bg-opacity-50 text-green-300 border border-green-700' 
+              : 'bg-red-900 bg-opacity-50 text-red-300 border border-red-700'
           }`}>
             {message.text}
           </div>
@@ -60,14 +60,14 @@ export const WaitlistForm: React.FC = () => {
         <Button 
           type="submit" 
           disabled={isLoading || !email.trim()}
-          className="w-full !py-4 !text-lg !bg-[#F7F7FF] !text-[#10219F] !border-2 !border-[#F7F7FF] hover:!bg-[#BDD5EA] hover:!text-[#000000]"
+          className="w-full !py-4 !text-lg"
         >
           {isLoading ? 'Joining Waitlist...' : 'Join Waitlist'}
         </Button>
       </form>
 
       <p className="text-[#BDD5EA] text-sm text-center mt-4">
-        We'll notify you when boardom is ready for early access.
+        <span className="text-gray-400">We'll notify you when boardom is ready for early access.</span>
       </p>
     </div>
   );
