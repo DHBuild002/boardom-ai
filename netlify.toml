@@ -7,4 +7,15 @@
   SECRETS_SCAN_OMIT_PATHS = "vite.config.js,.env"
 
 [functions]
+  directory = "netlify/functions"
   node_bundler = "esbuild"
+
+[context.production.environment]
+  # Client-side environment variables (if needed for non-sensitive operations)
+  # VITE_FIREBASE_API_KEY = "your-client-api-key-for-reads-only"
+  # VITE_FIREBASE_PROJECT_ID = "your-project-id-for-reads-only"
+
+# Note: Sensitive Firebase Admin credentials are set in Netlify UI:
+# - FIREBASE_PROJECT_ID
+# - FIREBASE_PRIVATE_KEY  
+# - FIREBASE_CLIENT_EMAIL
