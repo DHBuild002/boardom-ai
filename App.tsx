@@ -8,7 +8,7 @@ function App() {
       <header className="px-6 py-4 border-b border-[#BDD5EA]">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-baseline">
-            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1 rounded-full"></span>
+            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1"></span>
           </h1>
         </div>
       </header>
@@ -90,7 +90,7 @@ function App() {
       <footer className="bg-[#000000] text-[#F7F7FF] py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-2xl font-bold mb-4 text-[#F7F7FF] flex items-baseline justify-center">
-            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1 rounded-full"></span>
+            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1"></span>
           </h3>
           <p className="text-[#BDD5EA] mb-6">
             AI-powered workflow management for structured development.
