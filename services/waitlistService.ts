@@ -9,32 +9,6 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
   try {
     console.log('📧 Attempting to add email to waitlist:', email.toLowerCase());
     
-    // First, check debug endpoint to verify configuration
-    try {
-      const debugResponse = await fetch('/.netlify/functions/debug-waitlist', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
-      
-      if (debugResponse.ok) {
-        const debugData = await debugResponse.json();
-        console.log('🔍 Debug info:', debugData);
-        
-        if (!debugData.firebaseAdminTest?.success) {
-          console.error('❌ Firebase configuration issue detected:', debugData.firebaseAdminTest);
-          return {
-            success: false,
-            message: "Server configuration error. Please contact support."
-          };
-        }
-      }
-    } catch (debugError) {
-      console.warn('⚠️ Debug endpoint failed:', debugError);
-      // Continue anyway - debug failure shouldn't block the main function
-    }
-
     // Call Netlify function instead of direct Firebase
     const response = await fetch('/.netlify/functions/waitlist', {
       method: 'POST',
@@ -60,7 +34,6 @@ export const addToWaitlist = async (email: string): Promise<{ success: boolean; 
 
     if (!response.ok) {
       console.warn('⚠️ Waitlist function error:', response.status, result?.message || 'Unknown error');
-      console.warn('⚠️ Debug info:', result?.debug);
       return {
         success: false,
         message: result?.message || "Unable to join waitlist right now. Please try again later."

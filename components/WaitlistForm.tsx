@@ -2,48 +2,10 @@ import React, { useState } from 'react';
 import { Button } from './common/Button';
 import { addToWaitlist } from '../services/waitlistService';
 
-// Debug component to show environment info
-const DebugInfo: React.FC<{ show: boolean }> = ({ show }) => {
-  const [debugData, setDebugData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-
-  const fetchDebugInfo = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/.netlify/functions/debug-waitlist');
-      const data = await response.json();
-      setDebugData(data);
-    } catch (error) {
-      setDebugData({ error: error.message });
-    }
-    setLoading(false);
-  };
-
-  if (!show) return null;
-
-  return (
-    <div className="mt-4 p-3 bg-gray-100 rounded-lg text-xs">
-      <button 
-        onClick={fetchDebugInfo}
-        className="mb-2 px-2 py-1 bg-blue-500 text-white rounded text-xs"
-        disabled={loading}
-      >
-        {loading ? 'Loading...' : 'Check Debug Info'}
-      </button>
-      {debugData && (
-        <pre className="overflow-auto max-h-40 text-xs">
-          {JSON.stringify(debugData, null, 2)}
-        </pre>
-      )}
-    </div>
-  );
-};
-
 export const WaitlistForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
-  const [showDebug, setShowDebug] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,18 +65,6 @@ export const WaitlistForm: React.FC = () => {
           {isLoading ? 'Joining Waitlist...' : 'Join Waitlist'}
         </Button>
       </form>
-
-      {/* Debug toggle - only show in development or if there's an error */}
-      {(import.meta.env.DEV || message?.type === 'error') && (
-        <button
-          onClick={() => setShowDebug(!showDebug)}
-          className="mt-2 text-xs text-gray-500 underline"
-        >
-          {showDebug ? 'Hide' : 'Show'} Debug Info
-        </button>
-      )}
-
-      <DebugInfo show={showDebug} />
 
       <p className="text-[#000000] opacity-60 text-xs text-center mt-3">
         We'll notify you when boardom is ready for early access.
