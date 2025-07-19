@@ -9,9 +9,259 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Temporarily add CDN for audit comparison -->
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
+    
+    <!-- Load audit utilities -->
+    <script src="./utils/styleAuditor.js"></script>
+    <script src="./utils/auditRunner.js"></script>
+    <script src="./utils/postcssValidator.js"></script>
+    
+    <!-- Quick audit controls -->
+    <div id="audit-controls" style="position: fixed; top: 10px; right: 10px; background: white; border: 2px solid #333; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 1000; max-width: 300px; font-family: monospace; font-size: 12px;">
+      <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">🔍 Style Audit</h3>
+      
+      <button onclick="runFirstAudit()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        1. Capture CDN Baseline
+      </button>
+      
+      <button onclick="switchToPostCSS()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        2. Switch to PostCSS
+      </button>
+      
+      <button onclick="compareStyles()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        3. Compare & Analyze
+      </button>
+      
+      <button onclick="exportAuditResults()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #6366f1; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        4. Export Results
+      </button>
+      
+      <div id="audit-status" style="margin-top: 10px; padding: 10px; background: #f3f4f6; border-radius: 4px; max-height: 150px; overflow-y: auto;">
+        <div style="color: #059669;">✅ Ready to start audit</div>
+      </div>
+    </div>
+    
+    <script>
+      // Global audit state
+      let auditState = {
+        cdnStyles: null,
+        postcssStyles: null,
+        comparison: null,
+        currentStep: 1
+      };
+      
+      function updateStatus(message, type = 'info') {
+        const statusDiv = document.getElementById('audit-status');
+        const colors = {
+          success: '#059669',
+          error: '#dc2626',
+          warning: '#d97706',
+          info: '#2563eb'
+        };
+        
+        const timestamp = new Date().toLocaleTimeString();
+        const newEntry = `<div style="color: ${colors[type]}; margin: 2px 0;">${timestamp}: ${message}</div>`;
+        statusDiv.innerHTML = newEntry + statusDiv.innerHTML;
+      }
+      
+      // Step 1: Capture CDN baseline
+      async function runFirstAudit() {
+        updateStatus('🔍 Starting CDN baseline capture...', 'info');
+        
+        try {
+          // Initialize auditor
+          const auditor = new StyleAuditor();
+          
+          // Define key selectors for your app
+          const selectors = [
+            'header',
+            'main', 
+            'section',
+            'footer',
+            'h1', 'h2', 'h3',
+            'button',
+            'input',
+            'form',
+            '.bg-\\[\\#F7F7FF\\]',
+            '.text-\\[\\#000000\\]',
+            '.text-\\[\\#10219F\\]',
+            '.bg-\\[\\#10219F\\]',
+            '.bg-\\[\\#BDD5EA\\]',
+            '.text-\\[\\#FE5F55\\]',
+            '.max-w-7xl',
+            '.max-w-4xl',
+            '.grid',
+            '.flex',
+            '.rounded-lg',
+            '.rounded-xl',
+            '.shadow-lg'
+          ];
+          
+          // Capture CDN styles
+          auditState.cdnStyles = auditor.captureStyles(selectors, 'cdn');
+          
+          updateStatus(`✅ CDN baseline captured: ${auditState.cdnStyles.styles.size} elements`, 'success');
+          updateStatus('📋 Key elements captured: header, sections, buttons, custom colors', 'info');
+          updateStatus('➡️ Ready for Step 2: Switch to PostCSS', 'success');
+          
+        } catch (error) {
+          updateStatus(`❌ Error capturing CDN baseline: ${error.message}`, 'error');
+        }
+      }
+      
+      // Step 2: Switch to PostCSS
+      async function switchToPostCSS() {
+        if (!auditState.cdnStyles) {
+          updateStatus('⚠️ Please run Step 1 first', 'warning');
+          return;
+        }
+        
+        updateStatus('🔄 Switching to PostCSS...', 'info');
+        
+        try {
+          // Remove CDN script
+          const cdnScript = document.querySelector('script[src*="tailwindcss.com"]');
+          if (cdnScript) {
+            cdnScript.remove();
+            updateStatus('🗑️ CDN script removed', 'info');
+          }
+          
+          // Wait for styles to update
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          // Capture PostCSS styles
+          const auditor = new StyleAuditor();
+          const selectors = [
+            'header', 'main', 'section', 'footer',
+            'h1', 'h2', 'h3', 'button', 'input', 'form',
+            '.bg-\\[\\#F7F7FF\\]', '.text-\\[\\#000000\\]', '.text-\\[\\#10219F\\]',
+            '.bg-\\[\\#10219F\\]', '.bg-\\[\\#BDD5EA\\]', '.text-\\[\\#FE5F55\\]',
+            '.max-w-7xl', '.max-w-4xl', '.grid', '.flex',
+            '.rounded-lg', '.rounded-xl', '.shadow-lg'
+          ];
+          
+          auditState.postcssStyles = auditor.captureStyles(selectors, 'postcss');
+          
+          updateStatus(`✅ PostCSS styles captured: ${auditState.postcssStyles.styles.size} elements`, 'success');
+          updateStatus('➡️ Ready for Step 3: Compare styles', 'success');
+          
+        } catch (error) {
+          updateStatus(`❌ Error switching to PostCSS: ${error.message}`, 'error');
+        }
+      }
+      
+      // Step 3: Compare styles
+      async function compareStyles() {
+        if (!auditState.cdnStyles || !auditState.postcssStyles) {
+          updateStatus('⚠️ Please complete Steps 1 and 2 first', 'warning');
+          return;
+        }
+        
+        updateStatus('🔍 Comparing CDN vs PostCSS styles...', 'info');
+        
+        try {
+          const auditor = new StyleAuditor();
+          auditor.capturedStyles.set('cdn', auditState.cdnStyles);
+          auditor.capturedStyles.set('postcss', auditState.postcssStyles);
+          
+          auditState.comparison = auditor.compareStyles('cdn', 'postcss');
+          
+          const { summary } = auditState.comparison;
+          const accuracy = ((summary.identicalElements / summary.totalElements) * 100).toFixed(1);
+          
+          updateStatus(`📊 Comparison complete!`, 'success');
+          updateStatus(`📈 Style accuracy: ${accuracy}%`, accuracy > 95 ? 'success' : 'warning');
+          updateStatus(`✅ Identical: ${summary.identicalElements}`, 'success');
+          updateStatus(`⚠️ Different: ${summary.differentElements}`, summary.differentElements > 0 ? 'warning' : 'success');
+          updateStatus(`❌ Missing: ${summary.missingElements}`, summary.missingElements > 0 ? 'error' : 'success');
+          
+          if (accuracy < 95) {
+            updateStatus('🔧 Issues detected - check export for details', 'warning');
+          } else {
+            updateStatus('🎉 Excellent style parity achieved!', 'success');
+          }
+          
+          updateStatus('➡️ Ready for Step 4: Export detailed results', 'success');
+          
+        } catch (error) {
+          updateStatus(`❌ Error comparing styles: ${error.message}`, 'error');
+        }
+      }
+      
+      // Step 4: Export results
+      function exportAuditResults() {
+        if (!auditState.comparison) {
+          updateStatus('⚠️ Please complete comparison first', 'warning');
+          return;
+        }
+        
+        try {
+          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+          const exportData = {
+            timestamp: new Date().toISOString(),
+            summary: auditState.comparison.summary,
+            differences: auditState.comparison.differences,
+            recommendations: generateRecommendations(auditState.comparison)
+          };
+          
+          // Create downloadable file
+          const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `style-audit-${timestamp}.json`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          
+          updateStatus('📁 Audit results exported successfully', 'success');
+          updateStatus('🔍 Check downloaded file for detailed analysis', 'info');
+          
+        } catch (error) {
+          updateStatus(`❌ Error exporting results: ${error.message}`, 'error');
+        }
+      }
+      
+      function generateRecommendations(comparison) {
+        const recommendations = [];
+        
+        if (comparison.summary.missingElements > 0) {
+          recommendations.push({
+            type: 'missing-elements',
+            priority: 'high',
+            message: 'Some elements are missing in PostCSS build. Check Tailwind content paths.',
+            action: 'Update tailwind.config.js content array to include all component files'
+          });
+        }
+        
+        const criticalDiffs = comparison.differences.filter(diff => 
+          diff.differences && diff.differences.some(d => d.severity === 'critical')
+        );
+        
+        if (criticalDiffs.length > 0) {
+          recommendations.push({
+            type: 'critical-differences',
+            priority: 'high',
+            message: `${criticalDiffs.length} elements have critical style differences`,
+            action: 'Review arbitrary value classes and safelist configuration'
+          });
+        }
+        
+        return recommendations;
+      }
+      
+      // Auto-start message
+      setTimeout(() => {
+        updateStatus('🚀 Click "1. Capture CDN Baseline" to begin', 'info');
+      }, 1000);
+    </script>
   </body>
 </html>
