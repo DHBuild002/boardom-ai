@@ -5,17 +5,15 @@
 [build.environment]
   NODE_VERSION = "20.11.0"
   SECRETS_SCAN_OMIT_PATHS = "vite.config.js,.env"
+  # Note: Set FIREBASE_PRIVATE_KEY in Netlify UI under Site settings > Environment variables
+  # The private key should be the full multi-line key including BEGIN/END markers
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
 [context.production.environment]
-  # Client-side environment variables (if needed for non-sensitive operations)
-  # VITE_FIREBASE_API_KEY = "your-client-api-key-for-reads-only"
-  # VITE_FIREBASE_PROJECT_ID = "your-project-id-for-reads-only"
-
-# Note: Sensitive Firebase Admin credentials are set in Netlify UI:
-# - FIREBASE_PROJECT_ID
-# - FIREBASE_PRIVATE_KEY  
-# - FIREBASE_CLIENT_EMAIL
+  # Server-side Firebase Admin credentials are set in Netlify UI:
+  # FIREBASE_PROJECT_ID = "totalboardom-f1adb" (already set)
+  # FIREBASE_CLIENT_EMAIL = "firebase-adminsdk-fbsvc@totalboardom-f1adb.iam.gserviceaccount.com" (already set)
+  # FIREBASE_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n" (MISSING - needs to be set)

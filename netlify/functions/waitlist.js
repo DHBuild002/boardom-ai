@@ -20,7 +20,7 @@ const initializeFirebase = () => {
     // Parse the private key properly - handle both escaped and unescaped newlines
     let privateKey = process.env.FIREBASE_PRIVATE_KEY;
     if (privateKey) {
-      // Replace literal \n with actual newlines
+      // Replace literal \n with actual newlines if they exist
       privateKey = privateKey.replace(/\\n/g, '\n');
       
       // Ensure it starts and ends with proper markers
@@ -30,6 +30,8 @@ const initializeFirebase = () => {
       if (!privateKey.includes('-----END PRIVATE KEY-----')) {
         throw new Error('Invalid private key format - missing END marker');
       }
+    } else {
+      throw new Error('FIREBASE_PRIVATE_KEY environment variable is not set');
     }
 
     const firebaseConfig = {
