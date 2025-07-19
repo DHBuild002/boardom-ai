@@ -7,7 +7,7 @@ function App() {
     <div className="min-h-screen bg-[#F7F7FF] text-[#000000]">
       {/* Header */}
       <header className="px-6 py-4 border-b border-[#BDD5EA]">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-baseline">
             boardom<span className="inline-block w-2 h-2 bg-[#FE5F55] ml-1"></span>
           </h1>
@@ -16,7 +16,7 @@ function App() {
 
       {/* Hero Section */}
       <section className="py-16 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight text-[#000000]">
             Free Yourself from Prompting <span className="text-[#FE5F55]">boardom</span>
           </h2>
@@ -43,7 +43,7 @@ function App() {
 
       {/* Features Section */}
       <section className="py-16 px-6 bg-[#BDD5EA] bg-opacity-20">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-3 text-[#000000]">
             Why boardom Changes Everything
           </h2>
@@ -94,7 +94,7 @@ function App() {
 
       {/* Footer */}
       <footer className="bg-[#10219F] py-10 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-xl font-bold mb-3 flex items-baseline justify-center text-white">
             boardom<span className="inline-block w-2 h-2 bg-[#FE5F55] ml-1"></span>
           </h3>

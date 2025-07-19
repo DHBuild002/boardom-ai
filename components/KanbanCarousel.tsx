@@ -8,86 +8,86 @@ export const KanbanCarousel: React.FC = () => {
           @keyframes cardMovement {
             /* Phase 1: Fade in from top in TODO (0-15%) */
             0% { 
-              transform: translateX(10px) translateY(-40px); 
+              transform: translateX(5%) translateY(-40px); 
               opacity: 0;
             }
             15% { 
-              transform: translateX(10px) translateY(0px); 
+              transform: translateX(5%) translateY(0px); 
               opacity: 1;
             }
             
             /* Phase 2: Stay in TODO then fade out (15-30%) */
             25% { 
-              transform: translateX(10px) translateY(0px); 
+              transform: translateX(5%) translateY(0px); 
               opacity: 1;
             }
             30% { 
-              transform: translateX(10px) translateY(0px); 
+              transform: translateX(5%) translateY(0px); 
               opacity: 0;
             }
 
             /* Phase 3: Fade in from top in IN PROGRESS (30-45%) */
             35% { 
-              transform: translateX(230px) translateY(-40px); 
+              transform: translateX(calc(100% + 1.5rem)) translateY(-40px); 
               opacity: 0;
             }
             45% { 
-              transform: translateX(230px) translateY(0px); 
+              transform: translateX(calc(100% + 1.5rem)) translateY(0px); 
               opacity: 1;
             }
             
             /* Phase 4: Stay in IN PROGRESS then fade out (45-65%) */
             60% { 
-              transform: translateX(230px) translateY(0px); 
+              transform: translateX(calc(100% + 1.5rem)) translateY(0px); 
               opacity: 1;
             }
             65% { 
-              transform: translateX(230px) translateY(0px); 
+              transform: translateX(calc(100% + 1.5rem)) translateY(0px); 
               opacity: 0;
             }
 
             /* Phase 5: Fade in from top in DONE (65-80%) */
             70% { 
-              transform: translateX(450px) translateY(-40px); 
+              transform: translateX(calc(200% + 3rem)) translateY(-40px); 
               opacity: 0;
             }
             80% { 
-              transform: translateX(450px) translateY(0px); 
+              transform: translateX(calc(200% + 3rem)) translateY(0px); 
               opacity: 1;
             }
             
             /* Phase 6: Stay in DONE then fade out for loop (80-100%) */
             95% { 
-              transform: translateX(450px) translateY(0px); 
+              transform: translateX(calc(200% + 3rem)) translateY(0px); 
               opacity: 1;
             }
             100% { 
-              transform: translateX(450px) translateY(0px); 
+              transform: translateX(calc(200% + 3rem)) translateY(0px); 
               opacity: 0;
             }
           }
 
           @keyframes cardScale {
             /* TODO phase */
-            0% { transform: translateX(10px) translateY(-40px) scale(1); }
-            15% { transform: translateX(10px) translateY(0px) scale(1); }
-            25% { transform: translateX(10px) translateY(0px) scale(1); }
-            30% { transform: translateX(10px) translateY(0px) scale(1); }
+            0% { transform: translateX(5%) translateY(-40px) scale(1); }
+            15% { transform: translateX(5%) translateY(0px) scale(1); }
+            25% { transform: translateX(5%) translateY(0px) scale(1); }
+            30% { transform: translateX(5%) translateY(0px) scale(1); }
 
             /* IN PROGRESS phase - slightly larger */
-            35% { transform: translateX(230px) translateY(-40px) scale(1); }
-            40% { transform: translateX(230px) translateY(0px) scale(1.05); }
+            35% { transform: translateX(calc(100% + 1.5rem)) translateY(-40px) scale(1); }
+            40% { transform: translateX(calc(100% + 1.5rem)) translateY(0px) scale(1.05); }
             50% { 
-              transform: translateX(230px) translateY(0px) scale(1.02); 
+              transform: translateX(calc(100% + 1.5rem)) translateY(0px) scale(1.02); 
             }
-            60% { transform: translateX(230px) translateY(0px) scale(1.02); }
-            65% { transform: translateX(230px) translateY(0px) scale(1); }
+            60% { transform: translateX(calc(100% + 1.5rem)) translateY(0px) scale(1.02); }
+            65% { transform: translateX(calc(100% + 1.5rem)) translateY(0px) scale(1); }
 
             /* DONE phase */
-            70% { transform: translateX(450px) translateY(-40px) scale(1); }
-            80% { transform: translateX(450px) translateY(0px) scale(1); }
-            95% { transform: translateX(450px) translateY(0px) scale(1); }
-            100% { transform: translateX(450px) translateY(0px) scale(1); }
+            70% { transform: translateX(calc(200% + 3rem)) translateY(-40px) scale(1); }
+            80% { transform: translateX(calc(200% + 3rem)) translateY(0px) scale(1); }
+            95% { transform: translateX(calc(200% + 3rem)) translateY(0px) scale(1); }
+            100% { transform: translateX(calc(200% + 3rem)) translateY(0px) scale(1); }
           }
 
           @keyframes gradientBorder {
@@ -162,8 +162,8 @@ export const KanbanCarousel: React.FC = () => {
               cardBackground 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
             position: absolute;
             top: 68px;
-            left: 16px;
-            width: 180px;
+            left: 1rem;
+            width: calc(33.333% - 2rem);
             height: 44px;
             z-index: 100;
             border-radius: 10px;
@@ -181,8 +181,8 @@ export const KanbanCarousel: React.FC = () => {
             animation: floatingText 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
             position: absolute;
             top: 40px;
-            left: 26px;
-            width: 180px;
+            left: 1.25rem;
+            width: calc(33.333% - 2rem);
             z-index: 101;
             font-size: 11px;
             font-weight: 700;
