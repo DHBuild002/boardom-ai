@@ -4,6 +4,13 @@ import { WaitlistForm } from './components/WaitlistForm';
 function App() {
   return (
     <div className="min-h-screen bg-[#F7F7FF] text-[#000000]">
+      {/* Test element for PostCSS diagnostic */}
+      <div className="test-nested fixed top-4 right-4 bg-white p-4 border border-gray-300 rounded shadow-lg z-50">
+        <div className="inner-element font-bold">
+          PostCSS Test: This text should be red if PostCSS is working
+        </div>
+      </div>
+
       {/* Header */}
       <header className="px-6 py-4 border-b border-[#BDD5EA]">
         <div className="max-w-5xl mx-auto flex justify-between items-center">
