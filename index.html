@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     
-    <!-- Temporarily add CDN for audit comparison -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CDN for audit comparison - will be toggled during testing -->
+    <script id="tailwind-cdn" src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -72,7 +72,15 @@
       
       // Step 1: Capture CDN baseline
       async function runFirstAudit() {
-        updateStatus('🔍 Starting CDN baseline capture...', 'info');
+        updateStatus('🔍 Checking if utilities are loaded...', 'info');
+        
+        // Check if utilities are available
+        if (typeof StyleAuditor === 'undefined') {
+          updateStatus('❌ StyleAuditor not loaded. Please refresh the page.', 'error');
+          return;
+        }
+        
+        updateStatus('✅ Utilities loaded. Starting CDN baseline capture...', 'info');
         
         try {
           // Initialize auditor
@@ -126,10 +134,12 @@
         
         try {
           // Remove CDN script
-          const cdnScript = document.querySelector('script[src*="tailwindcss.com"]');
+          const cdnScript = document.getElementById('tailwind-cdn');
           if (cdnScript) {
             cdnScript.remove();
             updateStatus('🗑️ CDN script removed', 'info');
+          } else {
+            updateStatus('⚠️ CDN script not found - may already be removed', 'warning');
           }
           
           // Wait for styles to update
@@ -260,7 +270,19 @@
       
       // Auto-start message
       setTimeout(() => {
-        updateStatus('🚀 Click "1. Capture CDN Baseline" to begin', 'info');
+        if (typeof StyleAuditor !== 'undefined') {
+          updateStatus('🚀 Click "1. Capture CDN Baseline" to begin', 'info');
+        } else {
+          updateStatus('⚠️ Loading utilities... Please wait', 'warning');
+          // Try again in a moment
+          setTimeout(() => {
+            if (typeof StyleAuditor !== 'undefined') {
+              updateStatus('✅ Utilities loaded! Click "1. Capture CDN Baseline" to begin', 'success');
+            } else {
+              updateStatus('❌ Failed to load utilities. Please refresh the page.', 'error');
+            }
+          }, 2000);
+        }
       }, 1000);
     </script>
   </body>

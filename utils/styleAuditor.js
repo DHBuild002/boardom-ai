@@ -266,59 +266,6 @@ class StyleAuditor {
   }
 
   /**
-   * Generate a comprehensive report
-   */
-  generateReport(comparison) {
-    const report = {
-      ...comparison,
-      recommendations: this.generateRecommendations(comparison),
-      exportData: this.prepareExportData(comparison)
-    };
-
-    return report;
-  }
-
-  /**
-   * Generate recommendations based on comparison results
-   */
-  generateRecommendations(comparison) {
-    const recommendations = [];
-
-    if (comparison.summary.missingElements > 0) {
-      recommendations.push({
-        type: 'missing-elements',
-        priority: 'high',
-        message: `${comparison.summary.missingElements} elements are missing in one version. Check Tailwind content paths.`
-      });
-    }
-
-    const criticalDifferences = comparison.differences.filter(diff => 
-      diff.differences && diff.differences.some(d => d.severity === 'critical')
-    );
-
-    if (criticalDifferences.length > 0) {
-      recommendations.push({
-        type: 'critical-differences',
-        priority: 'high',
-        message: `${criticalDifferences.length} elements have critical style differences that may affect layout.`
-      });
-    }
-
-    return recommendations;
-  }
-
-  /**
-   * Prepare data for export/debugging
-   */
-  prepareExportData(comparison) {
-    return {
-      json: JSON.stringify(comparison, null, 2),
-      csv: this.convertToCSV(comparison),
-      summary: this.createSummaryText(comparison)
-    };
-  }
-
-  /**
    * Convert comparison results to CSV format
    */
   convertToCSV(comparison) {
@@ -340,53 +287,7 @@ class StyleAuditor {
 
     return rows.map(row => row.join(',')).join('\n');
   }
-
-  /**
-   * Create a human-readable summary
-   */
-  createSummaryText(comparison) {
-    return `
-Style Comparison Summary
-========================
-Versions: ${comparison.versions.join(' vs ')}
-Total Elements: ${comparison.summary.totalElements}
-Identical: ${comparison.summary.identicalElements}
-Different: ${comparison.summary.differentElements}
-Missing: ${comparison.summary.missingElements}
-
-Accuracy: ${((comparison.summary.identicalElements / comparison.summary.totalElements) * 100).toFixed(2)}%
-    `.trim();
-  }
-
-  /**
-   * Monitor dynamic style changes
-   */
-  startDynamicMonitoring(selectors = ['*'], interval = 1000) {
-    const monitor = setInterval(() => {
-      const currentStyles = this.captureStyles(selectors, `dynamic-${Date.now()}`);
-      // Store for later comparison
-      this.dynamicStyles.set(Date.now(), currentStyles);
-    }, interval);
-
-    return monitor;
-  }
-
-  /**
-   * Export all captured data
-   */
-  exportData() {
-    return {
-      capturedStyles: Object.fromEntries(this.capturedStyles),
-      comparisonResults: this.comparisonResults,
-      dynamicStyles: Object.fromEntries(this.dynamicStyles)
-    };
-  }
 }
 
 // Global instance
 window.StyleAuditor = StyleAuditor;
-
-// Export for module usage
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = StyleAuditor;
-}
