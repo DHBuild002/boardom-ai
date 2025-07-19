@@ -1,6 +1,5 @@
 import React from 'react';
 import { WaitlistForm } from './components/WaitlistForm';
-import { KanbanCarousel } from './components/KanbanCarousel';
 
 function App() {
   return (
@@ -24,11 +23,6 @@ function App() {
           <p className="text-lg text-[#000000] opacity-80 mb-8 max-w-2xl mx-auto leading-relaxed">
             Direct your AI effectively. This kanban tool helps you prioritize what's important, letting AI focus on a feature at a time with generative prompting.
           </p>
-
-          {/* Kanban Carousel */}
-          <div className="mb-12">
-            <KanbanCarousel />
-          </div>
 
           {/* CTA Section */}
           <div className="bg-white border border-[#BDD5EA] rounded-xl p-6 max-w-md mx-auto shadow-sm">
