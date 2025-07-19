@@ -14,8 +14,8 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-16 px-6">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="py-16 px-6 flex items-center justify-center min-h-[80vh]">
+        <div className="w-full max-w-lg mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight text-[#000000]">
             Free Yourself from Prompting <span className="text-[#FE5F55]">boardom</span>
           </h2>
@@ -25,7 +25,7 @@ function App() {
           </p>
 
           {/* CTA Section */}
-          <div className="bg-white border border-[#BDD5EA] rounded-xl p-6 max-w-md mx-auto shadow-sm">
+          <div className="bg-white border border-[#BDD5EA] rounded-xl p-8 mx-auto shadow-sm">
             <h3 className="text-xl font-bold mb-2 text-[#000000]">Ready to Structure Your AI Workflow?</h3>
             <p className="text-[#000000] opacity-70 mb-4 text-sm">
               Join the waitlist and be first to experience boardom's intelligent prompting pipeline.
