@@ -9,32 +9,5 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- CDN for audit comparison - will be toggled during testing -->
-    <script id="tailwind-cdn" src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
-    
-    <!-- Load audit utilities -->
-    <script src="./utils/styleAuditor.js"></script>
-    <script src="./utils/auditRunner.js"></script>
-    <script src="./utils/postcssValidator.js"></script>
-    
-    <!-- Quick audit controls -->
-    <div id="audit-controls" style="position: fixed; top: 10px; right: 10px; background: white; border: 2px solid #333; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 1000; max-width: 300px; font-family: monospace; font-size: 12px;">
-      <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">🔍 Style Audit</h3>
-      
-      <button onclick="runFirstAudit()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
-        1. Capture CDN Baseline
-      </button>
-      
-      <button onclick="switchToPostCSS()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer;">
-        2. Switch to PostCSS
-      <button onclick="compareStyles()" style="display: block; width: 100%; margin: 5px 0; padding: 8px 12px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">
-        3. Compare & Analyze
-      </button>
-      
-  </body>
-</html>
