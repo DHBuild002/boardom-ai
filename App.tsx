@@ -8,7 +8,7 @@ function App() {
       <header className="px-6 py-4 border-b border-[#BDD5EA]">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-baseline">
-            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1"></span>
+            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1 rounded-full"></span>
           </h1>
         </div>
       </header>
@@ -23,9 +23,6 @@ function App() {
           <p className="text-lg md:text-xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
             Direct your AI effectively. This kanban tool helps you prioritize what's important, letting AI focus on a feature at a time with generative prompting.
           </p>
-
-          {/* Configuration Warning */}
-          {/* Configuration handled dynamically */}
 
           {/* CTA Section */}
           <div className="bg-[#10219F] text-[#F7F7FF] rounded-2xl p-8 max-w-lg mx-auto">
@@ -52,7 +49,7 @@ function App() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-[#F7F7FF] border border-[#BDD5EA] rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-[#10219F] rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
@@ -64,7 +61,7 @@ function App() {
 
             <div className="bg-[#F7F7FF] border border-[#BDD5EA] rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-[#FE5F55] rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
@@ -76,7 +73,7 @@ function App() {
 
             <div className="bg-[#F7F7FF] border border-[#BDD5EA] rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
               <div className="w-16 h-16 bg-[#000000] rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
@@ -93,7 +90,7 @@ function App() {
       <footer className="bg-[#000000] text-[#F7F7FF] py-12 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-2xl font-bold mb-4 text-[#F7F7FF] flex items-baseline justify-center">
-            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1"></span>
+            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1 rounded-full"></span>
           </h3>
           <p className="text-[#BDD5EA] mb-6">
             AI-powered workflow management for structured development.
