@@ -7,38 +7,48 @@ export interface WaitlistEntry {
 
 export const addToWaitlist = async (email: string): Promise<{ success: boolean; message: string }> => {
   try {
-    console.log('📧 Attempting to add email to waitlist:', email);
+    console.log('📧 Attempting to add email to waitlist:', email.toLowerCase());
     
     // Call Netlify function instead of direct Firebase
     const response = await fetch('/.netlify/functions/waitlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({ email: email.toLowerCase() }),
     });
 
-    const result = await response.json();
-
-    if (!response.ok) {
-      console.warn('⚠️ Waitlist function error:', result.message);
+    let result;
+    try {
+      result = await response.json();
+    } catch (parseError) {
+      console.error('❌ Failed to parse response:', parseError);
       return {
         success: false,
-        message: result.message || "Unable to join waitlist right now. Please try again later."
+        message: "Server response error. Please try again later."
+      };
+    }
+
+    if (!response.ok) {
+      console.warn('⚠️ Waitlist function error:', response.status, result?.message || 'Unknown error');
+      return {
+        success: false,
+        message: result?.message || "Unable to join waitlist right now. Please try again later."
       };
     }
 
     console.log('✅ Email successfully added to waitlist!');
     return {
       success: true,
-      message: result.message
+      message: result?.message || "Successfully added to waitlist!"
     };
   } catch (error) {
     console.error("❌ Waitlist function error:", error);
     
     return {
       success: false,
-      message: "Unable to join waitlist right now. Please check your internet connection and try again."
+      message: "Network error. Please check your internet connection and try again."
     };
   }
 };
