@@ -33,6 +33,16 @@ export const HomePage: React.FC = () => {
             <div className="bg-[#10219F] -m-8 rounded-2xl">
               <WaitlistComponent mode="dark" />
             </div>
+            <p className="text-[#FFFFFF] text-xs text-center mt-4">
+              By entering your email address, you are agreeing to our{' '}
+              <a 
+                href="/privacy-policy" 
+                className="text-[#FFFFFF] hover:text-[#BDD5EA] underline transition-colors"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>
