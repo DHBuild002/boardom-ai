@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
     </style>
     <div data-custom-class="body">
       <div><strong><span style="font-size: 26px;"><span data-custom-class="title"><h1>PRIVACY NOTICE</h1></span></span></strong></div>
-      <div><span style="color: rgb(127, 127, 127);"><strong><span style="font-size: 15px;"><span data-custom-class="subtitle">Last updated __________</span></span></strong></span></div>
+      <div><span style="color: rgb(127, 127, 127);"><strong><span style="font-size: 15px;"><span data-custom-class="subtitle">Last updated 20/07/2025.</span></span></strong></span></div>
       <br><br><br>
       <div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">This Privacy Notice for __________ ('<strong>we</strong>', '<strong>us</strong>', or '<strong>our</strong>'), describes how and why we might access, collect, store, use, and/or share ('<strong>process</strong>') your personal information when you use our services ('<strong>Services</strong>'), including when you:</span></span></span></div>
       <ul>
