@@ -37,7 +37,7 @@ export const Component = ({ mode }: Props) => {
     <div className="flex justify-center items-center py-20">
       <InView triggerOnce threshold={0.5}>
         {({ inView, ref }) => (
-          <div ref={ref} className={`${mode === 'dark' ? 'bg-black border border-zinc-600' : 'bg-white'} w-full max-w-md mx-auto rounded-xl ${submitted ? 'p-1' : 'p-6'} z-50`}>
+          <div ref={ref} className={`${mode === 'dark' ? 'bg-[#F7F7FF] border border-[#BDD5EA]' : 'bg-white'} w-full max-w-md mx-auto rounded-xl ${submitted ? 'p-1' : 'p-6'} z-50`}>
             {!submitted ? (
               <div>
                 <div className="text-center">
@@ -45,7 +45,7 @@ export const Component = ({ mode }: Props) => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : -20 }}
                     transition={{ duration: 0.5 }}
-                    className={`${mode === 'dark' ? 'text-white' : 'text-gray-800'} text-3xl font-bold mb-4`}
+                    className={`${mode === 'dark' ? 'text-[#10219F]' : 'text-gray-800'} text-3xl font-bold mb-4`}
                   >
                     Join our waitlist
                   </motion.h2>
@@ -53,7 +53,7 @@ export const Component = ({ mode }: Props) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: inView ? 1 : 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className={`${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'} text-sm mb-6`}
+                    className={`${mode === 'dark' ? 'text-[#000000]' : 'text-gray-500'} text-sm mb-6 opacity-80`}
                   >
                     Be the first to access boardom's intelligent workflow system. Enter your email below to join the waitlist.
                   </motion.p>
@@ -68,7 +68,7 @@ export const Component = ({ mode }: Props) => {
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="flex-1 w-full bg-white appearance-none rounded-l-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-gray-300"
+                    className="flex-1 w-full bg-[#F7F7FF] appearance-none rounded-l-full py-2 px-4 text-[#000000] leading-tight focus:outline-none focus:ring-2 focus:ring-[#FE5F55] border border-[#BDD5EA]"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading}
@@ -76,7 +76,7 @@ export const Component = ({ mode }: Props) => {
                   <motion.button
                     type="submit"
                     disabled={!isEmailValid || isLoading}
-                    className={`bg-black text-white py-[6px] px-6 rounded-r-full focus:outline-none ${isEmailValid && !isLoading ? 'cursor-pointer hover:bg-opacity-90 border border-zinc-300' : 'cursor-not-allowed'} ${(!isEmailValid || isLoading) && 'border border-zinc-300'}`}
+                    className={`bg-[#10219F] text-[#F7F7FF] py-[6px] px-6 rounded-r-full focus:outline-none transition-all duration-300 ${isEmailValid && !isLoading ? 'cursor-pointer hover:bg-[#FE5F55] border border-[#BDD5EA]' : 'cursor-not-allowed opacity-60'} ${(!isEmailValid || isLoading) && 'border border-[#BDD5EA]'}`}
                   >
                     {isLoading ? 'Joining...' : 'Join'}
                   </motion.button>
@@ -93,7 +93,7 @@ export const Component = ({ mode }: Props) => {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className={`${mode === 'dark' ? 'text-white' : 'text-gray-800'} text-2xl font-bold mb-4 mt-8`}
+                  className={`${mode === 'dark' ? 'text-[#10219F]' : 'text-gray-800'} text-2xl font-bold mb-4 mt-8`}
                 >
                   You are on the waitlist
                 </motion.h2>
@@ -101,7 +101,7 @@ export const Component = ({ mode }: Props) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`${mode === 'dark' ? 'text-gray-400' : 'text-gray-500'} mb-6`}
+                  className={`${mode === 'dark' ? 'text-[#000000]' : 'text-gray-500'} mb-6 opacity-80`}
                 >
                   Thank you for joining boardom's waitlist.<br /> We'll keep you updated.
                 </motion.p>
@@ -114,7 +114,7 @@ export const Component = ({ mode }: Props) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className={`${mode === 'dark' ? 'text-gray-300' : 'text-slate-800'} size-6 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}
+                    className={`${mode === 'dark' ? 'text-[#10219F]' : 'text-slate-800'} size-6 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}
                   >
                     <path
                       fillRule="evenodd"
