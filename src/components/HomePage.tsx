@@ -1,5 +1,5 @@
 import React from 'react';
-import { Component as WaitlistComponent } from './ui/waitlist';
+import { Component as WaitlistComponent } from '../../components/ui/waitlist';
 
 export const HomePage: React.FC = () => {
   return (
