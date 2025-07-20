@@ -81,6 +81,21 @@ export const Component = ({ mode }: Props) => {
                     {isLoading ? 'Joining...' : 'Join'}
                   </motion.button>
                 </motion.form>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: inView ? 1 : 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  className={`${mode === 'dark' ? 'text-[#BDD5EA]' : 'text-gray-500'} text-xs text-center mt-3`}
+                >
+                  By entering your email address, you are agreeing to our{' '}
+                  <a 
+                    href="/privacy-policy" 
+                    className={`${mode === 'dark' ? 'text-[#F7F7FF] hover:text-[#BDD5EA]' : 'text-[#10219F] hover:text-[#FE5F55]'} underline transition-colors`}
+                  >
+                    Privacy Policy
+                  </a>
+                  .
+                </motion.p>
               </div>
             ) : (
               <motion.div
