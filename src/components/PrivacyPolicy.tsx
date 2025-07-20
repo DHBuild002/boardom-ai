@@ -22,11 +22,16 @@ const PrivacyPolicy: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm p-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
           
-          {/* Termly container - replace this div with your actual Termly snippet */}
-          <div id="termly-privacy-policy-container">
-            <p className="text-gray-600">
-              Privacy policy content will be loaded here via Termly script.
-            </p>
+          {/* Scrollable Privacy Policy Content Area */}
+          <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg p-6 bg-gray-50">
+            <div id="termly-privacy-policy-container">
+              <p className="text-gray-600 mb-4">
+                Privacy policy content will be loaded here via Termly script.
+              </p>
+              <p className="text-gray-500 text-sm">
+                This area is scrollable and can accommodate long privacy policy content.
+              </p>
+            </div>
           </div>
         </div>
 
