@@ -10,6 +10,7 @@ const PrivacyPolicy = () => {
     <style>
   [data-custom-class='body'], [data-custom-class='body'] * {
           background: transparent !important;
+          width: max-w-4xl;
         }
 [data-custom-class='title'], [data-custom-class='title'] * {
           font-family: Arial !important;
@@ -66,7 +67,7 @@ word-break: break-word !important;
   
   // Render the component by setting the inner HTML of a div.
   return (
-    <div className="max-w-4xl" dangerouslySetInnerHTML={{ __html: privacyPolicyHtml }} />
+    <div dangerouslySetInnerHTML={{ __html: privacyPolicyHtml }} />
   );
 };
 
