@@ -1,11 +1,9 @@
 import React from 'react';
 import { Component as WaitlistComponent } from '../../components/ui/waitlist';
-import { DebugTool } from './DebugTool';
 
 export const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F7F7FF] text-[#000000]">
-      <DebugTool />
       {/* Header */}
       <header className="px-6 py-4 border-b border-[#BDD5EA]">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
