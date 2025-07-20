@@ -11,6 +11,7 @@ const PrivacyPolicy = () => {
   [data-custom-class='body'], [data-custom-class='body'] * {
           background: transparent !important;
           width: 500px;
+          margin: 0;
         }
 [data-custom-class='title'], [data-custom-class='title'] * {
           font-family: Arial !important;
