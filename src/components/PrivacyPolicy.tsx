@@ -66,7 +66,7 @@ word-break: break-word !important;
   
   // Render the component by setting the inner HTML of a div.
   return (
-    <div dangerouslySetInnerHTML={{ __html: privacyPolicyHtml }} />
+    <div className="max-w-4xl" dangerouslySetInnerHTML={{ __html: privacyPolicyHtml }} />
   );
 };
 
