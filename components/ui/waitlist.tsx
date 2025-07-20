@@ -68,7 +68,7 @@ export const Component = ({ mode }: Props) => {
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="flex-1 w-full bg-[#F7F7FF] appearance-none rounded-l-full py-2 px-4 text-[#000000] leading-tight focus:outline-none focus:ring-2 focus:ring-[#FE5F55] border border-[#BDD5EA]"
+                    className="flex-1 w-full bg-[#F7F7FF] appearance-none rounded-l-full py-2 px-4 text-[#000000] leading-tight focus:outline-none focus:ring-2 focus:ring-[#10219F] border border-[#BDD5EA]"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading}
@@ -76,7 +76,7 @@ export const Component = ({ mode }: Props) => {
                   <motion.button
                     type="submit"
                     disabled={!isEmailValid || isLoading}
-                    className={`bg-[#10219F] text-[#F7F7FF] py-[6px] px-6 rounded-r-full focus:outline-none transition-all duration-300 ${isEmailValid && !isLoading ? 'cursor-pointer hover:bg-[#FE5F55] border border-[#BDD5EA]' : 'cursor-not-allowed opacity-60'} ${(!isEmailValid || isLoading) && 'border border-[#BDD5EA]'}`}
+                    className={`bg-[#10219F] text-[#F7F7FF] py-[6px] px-6 rounded-r-full focus:outline-none transition-all duration-300 border border-[#BDD5EA] ${isEmailValid && !isLoading ? 'cursor-pointer hover:bg-[#FE5F55]' : 'cursor-not-allowed opacity-60'}`}
                   >
                     {isLoading ? 'Joining...' : 'Join'}
                   </motion.button>
