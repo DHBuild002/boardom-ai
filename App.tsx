@@ -1,5 +1,5 @@
 import React from 'react';
-import { WaitlistForm } from './components/WaitlistForm';
+import { Component as WaitlistComponent } from './components/ui/waitlist';
 
 function App() {
   return (
@@ -30,7 +30,9 @@ function App() {
             <p className="text-[#BDD5EA] mb-6">
               Join the waitlist and be first to experience boardom's intelligent prompting pipeline.
             </p>
-            <WaitlistForm />
+            <div className="bg-[#10219F] -m-8 rounded-2xl">
+              <WaitlistComponent mode="dark" />
+            </div>
           </div>
         </div>
       </section>
