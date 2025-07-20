@@ -117,14 +117,6 @@ export const HomePage: React.FC = () => {
             </a>
           </div>
           <div className="mt-8 pt-8 border-t border-[#BDD5EA] border-opacity-30">
-            <div className="flex justify-center space-x-6 mb-4">
-              <a 
-                href="/privacy-policy" 
-                className="text-[#BDD5EA] hover:text-[#F7F7FF] transition-colors text-sm"
-              >
-                Privacy Policy
-              </a>
-            </div>
             <p className="text-[#BDD5EA] text-sm">
               © 2025 boardom. Built to structure AI development workflows.
             </p>
