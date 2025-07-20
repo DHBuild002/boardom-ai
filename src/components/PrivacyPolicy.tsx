@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
     <style>
   [data-custom-class='body'], [data-custom-class='body'] * {
           background: transparent !important;
-          width: max-w-4xl;
+          width: 500px;
         }
 [data-custom-class='title'], [data-custom-class='title'] * {
           font-family: Arial !important;
