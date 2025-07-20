@@ -183,7 +183,7 @@ export const Component = ({ mode }: Props) => {
                   </div>
                   
                   <div>
-                    <p><strong>How do you exercise your rights?</strong> The easiest way to exercise your rights is by visiting <a href="https://find.totalboardom.co.uk/account/preferences" target="_blank" className="text-[#10219F] hover:underline">https://find.totalboardom.co.uk/account/preferences</a>, or by contacting us.</p>
+                    <p><strong>How do you exercise your rights?</strong> The easiest way to exercise your rights is by visiting <a href="https://find.totalboardom.co.uk/account/preferences" target=\"_blank" className="text-[#10219F] hover:underline">https://find.totalboardom.co.uk/account/preferences</a>, or by contacting us.</p>
                   </div>
                 </div>
               </div>
