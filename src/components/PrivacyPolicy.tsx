@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const PrivacyPolicy: React.FC = () => {
-  return (
+      {/* Termly Privacy Policy Content */}
+      <main className="flex-grow py-12 px-6 max-w-4xl mx-auto">
     <style>
    [data-custom-class='body'], [data-custom-class='body'] * {
    background: transparent !important;
@@ -1575,59 +1575,21 @@ export const PrivacyPolicy: React.FC = () => {
                </span>
             </span>
          </span>
+          {/* 
       </span>
-   </span>
-   </span><span data-custom-class="body_text"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span data-custom-class="body_text"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></bdt></bdt></span></span>
-</div>
-<div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span data-custom-class="body_text"><strong>Will your information be shared with anyone else?</strong></span></span></span></div>
-<div style="line-height: 1.5;"><br></div>
-<div style="line-height: 1.5;">
-   <span style="font-size: 15px; color: rgb(89, 89, 89);">
-      <span style="font-size: 15px; color: rgb(89, 89, 89);">
-         <span data-custom-class="body_text">
-            We may disclose your personal information with our service providers pursuant to a written contract between us and each service provider. Learn more about how we disclose personal information to in the section, 
-            <bdt class="block-component"></bdt>
-            '
-            <bdt class="else-block"></bdt>
-         </span>
-      </span>
-   </span>
-   <a data-custom-class="link" href="#whoshare"><span style="font-size: 15px; color: rgb(0, 58, 250);"><span style="font-size: 15px; color: rgb(0, 58, 250);">WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</span></span></a>
-   <span style="font-size: 15px; color: rgb(89, 89, 89);">
-      <span style="font-size: 15px; color: rgb(89, 89, 89);">
-         <span data-custom-class="body_text">
-            <bdt class="block-component"></bdt>
-            '
-            <bdt class="else-block"></bdt>
-         </span>
-      </span>
-   </span>
-</div>
-<div style="line-height: 1.5;"><br></div>
-<div style="line-height: 1.5;">
-   <span style="font-size: 15px; color: rgb(89, 89, 89);">
-      <span style="font-size: 15px; color: rgb(89, 89, 89);">
-         <span data-custom-class="body_text">
-            We may use your personal information for our own business purposes, such as for undertaking internal research for technological development and demonstration. This is not considered to be 
-            <bdt class="block-component"></bdt>
-            'selling'
-            <bdt class="else-block"></bdt>
-            of your personal information.
-            <span style="color: rgb(89, 89, 89); font-size: 15px;">
-               <span data-custom-class="body_text">
-                  <bdt class="block-component"></bdt>
-               </span>
-            </span>
-         </span>
-      </span>
-      <bdt class="block-component"></bdt>
-   </span>
+            IMPORTANT: Replace this div with the actual Termly HTML snippet's container div.
    </span></span></span></span>
+            It usually looks something like: <div name="termly-embed" data-id="YOUR_TERMLY_POLICY_ID" data-type="iframe"></div>
 </div>
+            Ensure you use the exact attributes provided by Termly.
 <div style="line-height: 1.5;"><br></div>
+          */}
 <div style="line-height: 1.5;">
+          <div id="termly-privacy-policy-container">
 <bdt class="block-component"><span style="font-size: 15px;"><span data-custom-class="body_text"></span></span></bdt>
+            {/* Termly content will be injected here by the script */}
 <span data-custom-class="body_text"><span style="font-size: 15px;">We have not sold or shared any personal information to third parties for a business or commercial purpose in the preceding twelve (12) months. </span></span>
+          </div>
 <bdt class="statement-end-if-in-editor"><span style="font-size: 15px;"><span data-custom-class="body_text"></span></span></bdt>
 <span style="font-size: 15px;">
    <span style="color: rgb(89, 89, 89);">
