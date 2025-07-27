@@ -37,7 +37,7 @@ export const Component = ({ mode }: Props) => {
     <div className="flex justify-center items-center py-20">
       <InView triggerOnce threshold={0.5}>
         {({ inView, ref }) => (
-          <div ref={ref} className={`${mode === 'dark' ? 'bg-[#F7F7FF] border border-[#BDD5EA]' : 'bg-white'} w-full max-w-md mx-auto rounded-xl ${submitted ? 'p-1' : 'p-6'} z-50`}>
+          <div ref={ref} className={`${mode === 'dark' ? 'bg-[#F7F7FF] border border-[#BDD5EA]' : 'bg-white'} w-full max-w-lg mx-auto rounded-xl ${submitted ? 'p-1' : 'p-6'} z-50`}>
             {!submitted ? (
               <div>
                 <div className="text-center">
