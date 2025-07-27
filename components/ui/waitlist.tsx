@@ -82,7 +82,6 @@ export const Component = ({ mode }: Props) => {
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
   const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const canSubmit = isEmailValid && (siteKeyConfigured ? recaptchaToken !== null : true);
-  const canSubmit = isEmailValid && (siteKeyConfigured ? recaptchaToken !== null : true);
 
   return (
     <div className="flex justify-center items-center py-20">
