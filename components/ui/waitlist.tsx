@@ -25,9 +25,16 @@ export const Component = ({ mode }: Props) => {
 
   useEffect(() => {
     const renderRecaptcha = () => {
+      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+      
+      if (!siteKey) {
+        console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file.');
+        return;
+      }
+      
       if (recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered) {
         window.grecaptcha.render(recaptchaContainerRef.current, {
-          sitekey: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
+          sitekey: siteKey,
           callback: (token: string) => {
             setRecaptchaToken(token);
           },
@@ -72,7 +79,8 @@ export const Component = ({ mode }: Props) => {
   };
 
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
-  const canSubmit = isEmailValid && recaptchaToken !== null;
+  const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  const canSubmit = isEmailValid && (siteKeyConfigured ? recaptchaToken !== null : true);
 
   return (
     <div className="flex justify-center items-center py-20">
@@ -116,7 +124,13 @@ export const Component = ({ mode }: Props) => {
                     disabled={isLoading}
                   />
                   {/* Google reCAPTCHA widget container */}
-                  <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
+                  {siteKeyConfigured ? (
+                    <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
+                  ) : (
+                    <div className="mt-4 mb-2 p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
+                      ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
+                    </div>
+                  )}
                   <motion.button
                     type="submit"
                     disabled={!canSubmit || isLoading}
