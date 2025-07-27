@@ -1,4 +1,4 @@
-'use client'
+'use client' // This directive is typically used for React Server Components, but kept here as it was in the original file.
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { InView } from 'react-intersection-observer';
@@ -28,6 +28,12 @@ export const Component = ({ mode }: Props) => {
       const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
       
       if (!siteKey) {
+        console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file or Netlify environment variables.');
+        return;
+      }
+      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+      
+      if (!siteKey) {
         console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file.');
         return;
       }
@@ -50,6 +56,7 @@ export const Component = ({ mode }: Props) => {
     if (window.grecaptcha) {
       renderRecaptcha();
     }
+    // No cleanup needed for grecaptcha.render as it manages its own lifecycle.
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -80,6 +87,7 @@ export const Component = ({ mode }: Props) => {
 
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
   const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  const canSubmit = isEmailValid && (siteKeyConfigured ? recaptchaToken !== null : true);
   const canSubmit = isEmailValid && (siteKeyConfigured ? recaptchaToken !== null : true);
 
   return (
@@ -125,6 +133,12 @@ export const Component = ({ mode }: Props) => {
                   />
                   {/* Google reCAPTCHA widget container */}
                   {siteKeyConfigured ? (
+                    <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
+                  ) : (
+                    <div className="mt-4 mb-2 p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
+                      ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
+                    </div>
+                  )}
                     <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
                   ) : (
                     <div className="mt-4 mb-2 p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
