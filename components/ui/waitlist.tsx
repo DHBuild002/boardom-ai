@@ -31,12 +31,6 @@ export const Component = ({ mode }: Props) => {
         console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file or Netlify environment variables.');
         return;
       }
-      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-      
-      if (!siteKey) {
-        console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file.');
-        return;
-      }
       
       if (recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered) {
         window.grecaptcha.render(recaptchaContainerRef.current, {
