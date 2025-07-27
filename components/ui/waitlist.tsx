@@ -132,12 +132,6 @@ export const Component = ({ mode }: Props) => {
                       ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
                     </div>
                   )}
-                    <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
-                  ) : (
-                    <div className="mt-4 mb-2 p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
-                      ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
-                    </div>
-                  )}
                   <motion.button
                     type="submit"
                     disabled={!canSubmit || isLoading}
