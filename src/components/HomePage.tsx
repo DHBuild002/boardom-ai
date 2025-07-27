@@ -30,7 +30,7 @@ export const HomePage: React.FC = () => {
             <p className="text-[#BDD5EA] mb-6">
               Join the waitlist and be first to experience boardom's intelligent prompting pipeline.
             </p>
-            <div className="bg-[#10219F] -m-8 rounded-2xl">
+            <div className="bg-[#10219F] -m-8 rounded-2xl p-5">
               <WaitlistComponent mode="dark" />
             </div>
             <p className="text-[#FFFFFF] text-xs text-center mt-4">
