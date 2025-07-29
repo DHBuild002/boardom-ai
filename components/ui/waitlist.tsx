@@ -116,7 +116,7 @@ export const Component = ({ mode }: Props) => {
                   className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
                   onSubmit={handleSubmit}
                 >
-                <div>
+                <div className={`flex w-full items-center`}>
                   <input
                     type="email"
                     placeholder="Your email"
