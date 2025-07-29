@@ -1,144 +1,138 @@
-import React, { useState } from 'react';
-import { SparklesIcon, AnimatedWorkflowIcon } from '../../components/icons';
+import React from 'react';
 import { Component as WaitlistComponent } from '../../components/ui/waitlist';
 
 export const HomePage: React.FC = () => {
-  const [showDemo, setShowDemo] = useState(false);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#10219F] via-[#1a2fb8] to-[#FE5F55] text-white overflow-hidden relative">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-32 h-32 border border-white rounded-full"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 border border-white rounded-full"></div>
-        <div className="absolute bottom-32 left-1/4 w-16 h-16 border border-white rounded-full"></div>
-        <div className="absolute bottom-20 right-1/3 w-20 h-20 border border-white rounded-full"></div>
-      </div>
+    <div className="min-h-screen bg-[#F7F7FF] text-[#000000]">
+      {/* Header */}
+      <header className="px-6 py-4 border-b border-[#BDD5EA]">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold tracking-tight text-[#10219F] flex items-baseline">
+            boardom<span className="inline-block w-2 h-2 bg-[#000000] ml-1"></span>
+          </h1>
+        </div>
+      </header>
 
-      <div className="relative z-10">
-        {/* Header */}
-        <header className="flex justify-between items-center p-6 md:p-8">
-          <div className="flex items-center space-x-2">
-            <h1 className="text-2xl md:text-3xl font-black text-white">
-              boardom<span className="inline-block w-2 h-2 bg-white ml-1"></span>
-            </h1>
-          </div>
-          <nav className="hidden md:flex space-x-6">
-            <a href="/privacy-policy" className="text-white hover:text-[#BDD5EA] transition-colors">
-              Privacy Policy
-            </a>
-          </nav>
-        </header>
-
-        {/* Hero Section */}
-        <main className="container mx-auto px-6 md:px-8 py-12 md:py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Main Headline */}
-            <div className="mb-8">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-                AI Kanban
-                <br />
-                <span className="text-[#BDD5EA]">Workflow</span>
-              </h2>
-              <p className="text-xl md:text-2xl text-white opacity-90 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Transform your development process with intelligent task generation and streamlined workflow management
-              </p>
-            </div>
-
-            {/* Animated Workflow Visualization */}
-            <div className="mb-12">
-              <AnimatedWorkflowIcon />
-              <p className="text-sm text-white opacity-70 mt-4">
-                Watch tasks flow through your pipeline automatically
-              </p>
-            </div>
-
-            {/* Key Features */}
-            <div className="grid md:grid-cols-3 gap-8 mb-12 max-w-4xl mx-auto">
-              <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
-                <SparklesIcon className="w-8 h-8 text-[#BDD5EA] mb-4 mx-auto" />
-                <h3 className="text-lg font-bold mb-2">AI Task Generation</h3>
-                <p className="text-sm opacity-80">
-                  Generate comprehensive task lists from simple project descriptions using advanced AI
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
-                <div className="w-8 h-8 text-[#BDD5EA] mb-4 mx-auto flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3-6h3.75m-3.75 3h3.75m-3.75 3h3.75M5.25 6.75h13.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25H5.25a2.25 2.25 0 01-2.25-2.25V9a2.25 2.25 0 012.25-2.25z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-bold mb-2">Visual Kanban</h3>
-                <p className="text-sm opacity-80">
-                  Organize and track progress with intuitive drag-and-drop kanban boards
-                </p>
-              </div>
-              <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20">
-                <div className="w-8 h-8 text-[#BDD5EA] mb-4 mx-auto flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-bold mb-2">Smart Prompts</h3>
-                <p className="text-sm opacity-80">
-                  Get actionable AI-generated prompts to accelerate your development workflow
-                </p>
-              </div>
-            </div>
-
-            {/* Waitlist Section */}
-            <WaitlistComponent mode="dark" />
-
-            {/* Demo Button */}
-            <div className="mt-12">
-              <button
-                onClick={() => setShowDemo(!showDemo)}
-                className="text-[#BDD5EA] hover:text-white transition-colors text-sm font-medium underline"
-              >
-                {showDemo ? 'Hide' : 'See'} how it works
-              </button>
-              
-              {showDemo && (
-                <div className="mt-8 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 border border-white border-opacity-20 max-w-3xl mx-auto">
-                  <div className="grid md:grid-cols-2 gap-6 text-left">
-                    <div>
-                      <h4 className="font-bold mb-3 text-[#BDD5EA]">1. Describe Your Project</h4>
-                      <p className="text-sm opacity-80 mb-4">
-                        Simply tell boardom what you want to build: "Create a React todo app with user authentication"
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold mb-3 text-[#BDD5EA]">2. AI Generates Tasks</h4>
-                      <p className="text-sm opacity-80 mb-4">
-                        Our AI breaks down your project into actionable tasks, complete with descriptions and priorities
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold mb-3 text-[#BDD5EA]">3. Manage Your Workflow</h4>
-                      <p className="text-sm opacity-80 mb-4">
-                        Drag tasks through your kanban board: To Do → In Progress → Done
-                      </p>
-                    </div>
-                    <div>
-                      <h4 className="font-bold mb-3 text-[#BDD5EA]">4. Get Smart Prompts</h4>
-                      <p className="text-sm opacity-80 mb-4">
-                        Click any task to get detailed, actionable prompts for your IDE or AI assistant
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </main>
-
-        {/* Footer */}
-        <footer className="text-center py-8 px-6 border-t border-white border-opacity-20">
-          <p className="text-sm opacity-70">
-            © 2025 boardom. AI-powered workflow management for modern development teams.
+      {/* Hero Section */}
+      <section className="py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-[#000000]">
+            Free Yourself from Prompting <span className="text-[#10219F]">boardom</span>
+          </h2>
+          
+          <p className="text-lg md:text-xl text-[#000000] mb-12 max-w-3xl mx-auto leading-relaxed opacity-80">
+            Direct your AI effectively. This kanban tool helps you prioritize what's important, letting AI focus on a feature at a time with generative prompting.
           </p>
-        </footer>
-      </div>
+
+          {/* CTA Section */}
+          <div className="bg-[#10219F] text-[#F7F7FF] rounded-2xl p-8 max-w-lg mx-auto">
+            <h3 className="text-2xl font-bold mb-2 text-[#F7F7FF]">Ready to Structure Your AI Workflow?</h3>
+            <p className="text-[#BDD5EA] mb-6">
+              Join the waitlist and be first to experience boardom's intelligent prompting pipeline.
+            </p>
+            <div className="bg-[#10219F] -m-8 rounded-2xl">
+              <WaitlistComponent mode="dark" />
+            </div>
+            <p className="text-[#FFFFFF] text-xs text-center mt-4">
+              By entering your email address, you are agreeing to our{' '}
+              <a 
+                href="/privacy-policy" 
+                className="text-[#FFFFFF] hover:text-[#BDD5EA] underline transition-colors"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 px-6 bg-[#BDD5EA] bg-opacity-30">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4 text-[#000000]">
+            Why boardom Changes Everything
+          </h2>
+          <p className="text-xl text-[#000000] opacity-80 text-center mb-16 max-w-3xl mx-auto">
+            Stop spinning your wheels with repetitive AI prompts. boardom's intelligent workflow system 
+            guides your development process with structured prompting pipelines.
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-[#F7F7FF] border border-[#BDD5EA] rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+              <div className="w-16 h-16 bg-[#10219F] rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-[#000000]">Smart Task Generation</h3>
+              <p className="text-[#000000] opacity-80">
+                Transform vague ideas into structured, actionable prompts with AI that understands development workflows.
+              </p>
+            </div>
+
+            <div className="bg-[#F7F7FF] border border-[#BDD5EA] rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+              <div className="w-16 h-16 bg-[#FE5F55] rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-[#000000]">Guided Prompting Pipeline</h3>
+              <p className="text-[#000000] opacity-80">
+                Break free from endless prompting circles with contextual, structured AI guidance tailored to your workflow stage.
+              </p>
+            </div>
+
+            <div className="bg-[#F7F7FF] border border-[#BDD5EA] rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
+              <div className="w-16 h-16 bg-[#000000] rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-[#F7F7FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-[#000000]">Intelligent Workflow</h3>
+              <p className="text-[#000000] opacity-80">
+                Visual workflow management that structures your AI development process and keeps projects moving forward.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#000000] text-[#F7F7FF] py-12 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="text-2xl font-bold mb-4 text-[#F7F7FF] flex items-baseline justify-center">
+            boardom<span className="inline-block w-2 h-2 bg-[#F7F7FF] ml-1"></span>
+          </h3>
+          <p className="text-[#BDD5EA] mb-6">
+            AI-powered workflow management for structured development.
+          </p>
+          <div className="flex justify-center space-x-6 mb-6">
+            <a
+              href="https://x.com/totalboardom" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-[#F7F7FF] text-[#000000] px-6 py-3 rounded-lg font-semibold hover:bg-[#BDD5EA] transition-all duration-300 flex items-center gap-3 border border-[#BDD5EA]"
+            >
+              <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+                className="text-[#000000]"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Follow
+            </a>
+          </div>
+          <div className="mt-8 pt-8 border-t border-[#BDD5EA] border-opacity-30">
+            <p className="text-[#BDD5EA] text-sm">
+              © 2025 boardom. Built to structure AI development workflows.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
