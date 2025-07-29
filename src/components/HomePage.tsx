@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SparklesIcon, AnimatedWorkflowIcon } from '../../components/icons';
-import { Component as WaitlistComponent } from '../ui/waitlist';
+import { Component as WaitlistComponent } from '../../components/ui/waitlist';
 
 export const HomePage: React.FC = () => {
   const [showDemo, setShowDemo] = useState(false);
