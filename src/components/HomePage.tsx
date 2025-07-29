@@ -12,7 +12,7 @@ export const HomePage: React.FC = () => {
         {/* Coming Soon Message */}
         <div className="bg-white border border-[#BDD5EA] rounded-2xl p-8 md:p-12 shadow-lg">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#000000]">
-            Coming Soon
+            Coming Soon...
           </h2>
           
           <p className="text-lg md:text-xl text-[#000000] opacity-80 mb-8 leading-relaxed">
