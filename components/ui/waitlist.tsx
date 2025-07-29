@@ -117,7 +117,7 @@ export const Component = ({ mode }: Props) => {
                   onSubmit={handleSubmit}
                 >
                   {siteKeyConfigured ? (
-                    <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
+                    <div ref={recaptchaContainerRef} className=""></div>
                   ) : (
                     <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
                       ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
