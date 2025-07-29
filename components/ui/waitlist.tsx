@@ -116,6 +116,7 @@ export const Component = ({ mode }: Props) => {
                   className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
                   onSubmit={handleSubmit}
                 >
+                <div>
                   <input
                     type="email"
                     placeholder="Your email"
@@ -140,6 +141,7 @@ export const Component = ({ mode }: Props) => {
                     {isLoading ? 'Joining...' : 'Join'}
                   </motion.button>
                 </motion.form>
+                  </div>
                 
               </div>
             ) : (
