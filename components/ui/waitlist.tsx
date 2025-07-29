@@ -116,6 +116,13 @@ export const Component = ({ mode }: Props) => {
                   className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
                   onSubmit={handleSubmit}
                 >
+                  {siteKeyConfigured ? (
+                    <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
+                  ) : (
+                    <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
+                      ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
+                    </div>
+                  )}
                 <div className={`flex w-full items-center`}>
                   <input
                     type="email"
@@ -126,13 +133,6 @@ export const Component = ({ mode }: Props) => {
                     disabled={isLoading}
                   />
                   {/* Google reCAPTCHA widget container */}
-                  {siteKeyConfigured ? (
-                    <div ref={recaptchaContainerRef} className="mt-4 mb-2"></div>
-                  ) : (
-                    <div className="mt-4 mb-2 p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
-                      ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
-                    </div>
-                  )}
                   <motion.button
                     type="submit"
                     disabled={!canSubmit || isLoading}
