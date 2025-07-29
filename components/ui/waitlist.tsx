@@ -141,7 +141,7 @@ export const Component = ({ mode }: Props) => {
                     {isLoading ? 'Joining...' : 'Join'}
                   </motion.button>
                 </motion.form>
-                  </div>
+              </div>
                 
               </div>
             ) : (
