@@ -113,7 +113,7 @@ export const Component = ({ mode }: Props) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
-                  className="flex flex-col items-center justify-center space-y-4 m-5" // Changed to flex-col for better layout with recaptcha
+                  className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
                   onSubmit={handleSubmit}
                 >
                   {siteKeyConfigured ? (
