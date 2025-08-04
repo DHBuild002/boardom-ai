@@ -27,22 +27,39 @@ export const Component = ({ mode }: Props) => {
     const renderRecaptcha = () => {
       const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
       
+      // Debug logging
+      console.log('=== reCAPTCHA Debug Info ===');
+      console.log('Site Key:', siteKey);
+      console.log('Site Key Length:', siteKey?.length || 0);
+      console.log('Site Key Type:', typeof siteKey);
+      console.log('grecaptcha available:', !!window.grecaptcha);
+      console.log('Container ref:', !!recaptchaContainerRef.current);
+      console.log('Already rendered:', recaptchaContainerRef.current?.dataset.recaptchaRendered);
+      console.log('============================');
+      
       if (!siteKey) {
         console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file or Netlify environment variables.');
         return;
       }
       
       if (recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered) {
+        console.log('Attempting to render reCAPTCHA with site key:', siteKey);
         window.grecaptcha.render(recaptchaContainerRef.current, {
           sitekey: siteKey,
           callback: (token: string) => {
+            console.log('reCAPTCHA callback triggered, token received');
             setRecaptchaToken(token);
           },
           'expired-callback': () => {
+            console.log('reCAPTCHA expired callback triggered');
             setRecaptchaToken(null);
+          },
+          'error-callback': (error: any) => {
+            console.error('reCAPTCHA error callback triggered:', error);
           },
         });
         recaptchaContainerRef.current.dataset.recaptchaRendered = 'true';
+        console.log('reCAPTCHA render attempt completed');
       }
     };
 
