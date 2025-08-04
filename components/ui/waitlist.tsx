@@ -23,34 +23,10 @@ export const Component = ({ mode }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false); // New state for API readiness
-  const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false); // New state for API readiness
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
 
   // Determine if running in WebContainer
   const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
-
-  useEffect(() => {
-    const handleRecaptchaApiReady = () => {
-      setIsRecaptchaApiReady(true);
-      console.log('reCAPTCHA API is ready via event listener.');
-    };
-
-    // Only set up listener if not in WebContainer
-    if (!isWebContainer) {
-      document.addEventListener('recaptcha-api-ready', handleRecaptchaApiReady);
-      // Initial check in case the API loaded before the component mounted
-      if (window.recaptchaReady) {
-        setIsRecaptchaApiReady(true);
-        console.log('reCAPTCHA API was already ready on mount.');
-      }
-    }
-
-    return () => {
-      if (!isWebContainer) {
-        document.removeEventListener('recaptcha-api-ready', handleRecaptchaApiReady);
-      }
-    };
-  }, [isWebContainer]); // Re-run if isWebContainer changes (though unlikely in practice)
 
   useEffect(() => {
     const handleRecaptchaApiReady = () => {
