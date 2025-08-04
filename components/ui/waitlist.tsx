@@ -109,20 +109,20 @@ export const Component = ({ mode }: Props) => {
       return;
     }
     
-    if (!recaptchaToken) {
+    if (!isWebContainer && siteKeyConfigured && !recaptchaToken) {
       // This case should ideally be prevented by the disabled state of the button
       console.warn("reCAPTCHA token is missing. Please complete the CAPTCHA.");
       return;
     }
     
     setIsLoading(true);
-    const result = await addToWaitlist(email, recaptchaToken);
+    const result = await addToWaitlist(email, recaptchaToken || undefined);
     
     if (result.success) {
       setSubmitted(true);
       setEmail('');
       setRecaptchaToken(null); // Reset token after successful submission
-      if (window.grecaptcha) {
+      if (window.grecaptcha && !isWebContainer) {
         window.grecaptcha.reset(); // Reset the reCAPTCHA widget
       }
     }

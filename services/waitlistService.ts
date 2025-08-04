@@ -4,16 +4,24 @@ export interface WaitlistEntry {
   status: 'pending' | 'approved' | 'notified';
 }
 
-export const addToWaitlist = async (email: string): Promise<{ success: boolean; message: string }> => {
+export const addToWaitlist = async (email: string, recaptchaToken?: string): Promise<{ success: boolean; message: string }> => {
   try {
     // Call Netlify function instead of direct Firebase
+    const requestBody: { email: string; recaptchaToken?: string } = { 
+      email: email.toLowerCase() 
+    };
+    
+    if (recaptchaToken) {
+      requestBody.recaptchaToken = recaptchaToken;
+    }
+
     const response = await fetch('/.netlify/functions/waitlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify({ email: email.toLowerCase() }),
+      body: JSON.stringify(requestBody),
     });
 
     let result;
