@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { addToWaitlist } from '../waitlistService';
+import { addToWaitlist } from '@/services/waitlistService';
 
 // Mock fetch globally
 const mockFetch = vi.fn();

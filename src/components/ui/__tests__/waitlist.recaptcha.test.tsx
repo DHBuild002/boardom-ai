@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Component as WaitlistComponent } from '../waitlist';
+import { Component as WaitlistComponent } from '@/components/ui/waitlist';
 
 // Mock the waitlist service
-vi.mock('../../../services/waitlistService', () => ({
+vi.mock('@/services/waitlistService', () => ({
   addToWaitlist: vi.fn(),
 }));
 
@@ -165,7 +165,7 @@ describe('Waitlist Component - reCAPTCHA Integration', () => {
     let recaptchaCallback: (token: string) => void;
 
     // Mock successful waitlist service response
-    const { addToWaitlist } = await import('../../../services/waitlistService');
+    const { addToWaitlist } = await import('@/services/waitlistService');
     vi.mocked(addToWaitlist).mockResolvedValue({
       success: true,
       message: 'Successfully added to waitlist!',
