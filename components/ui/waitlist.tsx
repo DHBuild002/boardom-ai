@@ -104,7 +104,8 @@ export const Component = ({ mode }: Props) => {
 
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
   const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-  const canSubmit = isEmailValid && (siteKeyConfigured ? recaptchaToken !== null : true);
+  const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
+  const canSubmit = isEmailValid && (siteKeyConfigured && !isWebContainer ? recaptchaToken !== null : true);
 
   return (
     <div className="flex justify-center items-center py-20">
@@ -139,8 +140,12 @@ export const Component = ({ mode }: Props) => {
                   className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
                   onSubmit={handleSubmit}
                 >
-                  {siteKeyConfigured ? (
+                  {siteKeyConfigured && !isWebContainer ? (
                     <div ref={recaptchaContainerRef} className=""></div>
+                  ) : isWebContainer ? (
+                    <div className="p-3 bg-blue-100 border border-blue-300 rounded-lg text-sm text-blue-800">
+                      ℹ️ reCAPTCHA is disabled in development environment due to dynamic domain.
+                    </div>
                   ) : (
                     <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
                       ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
