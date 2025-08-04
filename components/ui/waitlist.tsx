@@ -57,9 +57,8 @@ export const Component = ({ mode }: Props) => {
       
       // Debug logging
       console.log('=== reCAPTCHA Debug Info ===');
-      console.log('Site Key:', siteKey);
+      console.log('Site Key configured:', !!siteKey);
       console.log('Site Key Length:', siteKey?.length || 0);
-      console.log('Site Key Type:', typeof siteKey);
       console.log('grecaptcha available:', !!window.grecaptcha);
       console.log('Container ref:', !!recaptchaContainerRef.current);
       console.log('Already rendered:', recaptchaContainerRef.current?.dataset.recaptchaRendered);
@@ -71,7 +70,7 @@ export const Component = ({ mode }: Props) => {
       
       // Only attempt to render if API is ready, container exists, not already rendered, AND NOT in WebContainer
       if (isRecaptchaApiReady && recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered && !isWebContainer) {
-        console.log('Attempting to render reCAPTCHA with site key:', siteKey);
+        console.log('Attempting to render reCAPTCHA...');
         window.grecaptcha.render(recaptchaContainerRef.current, {
           sitekey: siteKey,
           callback: (token: string) => {
@@ -88,7 +87,6 @@ export const Component = ({ mode }: Props) => {
             console.error('2. Site key is for wrong reCAPTCHA version (need v2)');
             console.error('3. Domain not registered in reCAPTCHA console');
             console.error('4. Network connectivity issues');
-            console.error('Site key being used:', siteKey);
             console.error('Current domain:', window.location.hostname);
           },
         });

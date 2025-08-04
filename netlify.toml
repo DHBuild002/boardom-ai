@@ -6,7 +6,7 @@
 [build.environment]
   NODE_VERSION = "20.11.0"
   SECRETS_SCAN_OMIT_PATHS = "netlify/functions"
-  SECRETS_SCAN_OMIT_KEYS = "VITE_RECAPTCHA_SITE_KEY"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_RECAPTCHA_SITE_KEY,VITE_FIREBASE_API_KEY,VITE_FIREBASE_PROJECT_ID"
 
 [functions]
   directory = "netlify/functions"
