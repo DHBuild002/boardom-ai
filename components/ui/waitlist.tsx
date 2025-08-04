@@ -9,6 +9,7 @@ type Mode = 'light' | 'dark';
 declare global {
   interface Window {
     grecaptcha: any; // Google reCAPTCHA object
+    recaptchaReady: boolean; // Our custom flag
   }
 }
 
@@ -21,7 +22,34 @@ export const Component = ({ mode }: Props) => {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false); // New state for API readiness
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+
+  // Determine if running in WebContainer
+  const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
+
+  useEffect(() => {
+    const handleRecaptchaApiReady = () => {
+      setIsRecaptchaApiReady(true);
+      console.log('reCAPTCHA API is ready via event listener.');
+    };
+
+    // Only set up listener if not in WebContainer
+    if (!isWebContainer) {
+      document.addEventListener('recaptcha-api-ready', handleRecaptchaApiReady);
+      // Initial check in case the API loaded before the component mounted
+      if (window.recaptchaReady) {
+        setIsRecaptchaApiReady(true);
+        console.log('reCAPTCHA API was already ready on mount.');
+      }
+    }
+
+    return () => {
+      if (!isWebContainer) {
+        document.removeEventListener('recaptcha-api-ready', handleRecaptchaApiReady);
+      }
+    };
+  }, [isWebContainer]); // Re-run if isWebContainer changes (though unlikely in practice)
 
   useEffect(() => {
     const renderRecaptcha = () => {
@@ -35,14 +63,12 @@ export const Component = ({ mode }: Props) => {
       console.log('grecaptcha available:', !!window.grecaptcha);
       console.log('Container ref:', !!recaptchaContainerRef.current);
       console.log('Already rendered:', recaptchaContainerRef.current?.dataset.recaptchaRendered);
+      console.log('isRecaptchaApiReady state:', isRecaptchaApiReady); // New debug info
+      console.log('isWebContainer:', isWebContainer);
       console.log('============================');
       
-      if (!siteKey) {
-        console.warn('reCAPTCHA site key is not configured. Please add VITE_RECAPTCHA_SITE_KEY to your .env file or Netlify environment variables.');
-        return;
-      }
-      
-      if (recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered) {
+      // Only attempt to render if API is ready, container exists, not already rendered, AND NOT in WebContainer
+      if (isRecaptchaApiReady && recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered && !isWebContainer) {
         console.log('Attempting to render reCAPTCHA with site key:', siteKey);
         window.grecaptcha.render(recaptchaContainerRef.current, {
           sitekey: siteKey,
@@ -69,12 +95,11 @@ export const Component = ({ mode }: Props) => {
       }
     };
 
-    // Check if grecaptcha is already loaded, otherwise it will be loaded by the script in index.html
-    if (window.grecaptcha) {
+    // Trigger render when API is ready, container ref changes, and not in WebContainer
+    if (isRecaptchaApiReady && recaptchaContainerRef.current && !isWebContainer) {
       renderRecaptcha();
     }
-    // No cleanup needed for grecaptcha.render as it manages its own lifecycle.
-  }, []);
+  }, [isRecaptchaApiReady, recaptchaContainerRef.current, isWebContainer]); // Re-run when API ready state, ref, or webcontainer status changes
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -104,8 +129,7 @@ export const Component = ({ mode }: Props) => {
 
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
   const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-  const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
-  const canSubmit = isEmailValid && (siteKeyConfigured && !isWebContainer ? recaptchaToken !== null : true);
+  const canSubmit = isEmailValid && (isWebContainer || (siteKeyConfigured && isRecaptchaApiReady && recaptchaToken !== null));
 
   return (
     <div className="flex justify-center items-center py-20">
