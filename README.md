@@ -22,6 +22,7 @@ VITE_FIREBASE_PROJECT_ID=your-actual-project-id
 
 ```env
 GEMINI_API_KEY=your-gemini-api-key
+VITE_RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 ```
 
 8. In the Firebase Console, go to Firestore Database

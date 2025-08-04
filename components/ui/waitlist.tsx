@@ -55,7 +55,13 @@ export const Component = ({ mode }: Props) => {
             setRecaptchaToken(null);
           },
           'error-callback': (error: any) => {
-            console.error('reCAPTCHA error callback triggered:', error);
+            console.error('reCAPTCHA error callback triggered. This usually means:');
+            console.error('1. Invalid site key for this domain');
+            console.error('2. Site key is for wrong reCAPTCHA version (need v2)');
+            console.error('3. Domain not registered in reCAPTCHA console');
+            console.error('4. Network connectivity issues');
+            console.error('Site key being used:', siteKey);
+            console.error('Current domain:', window.location.hostname);
           },
         });
         recaptchaContainerRef.current.dataset.recaptchaRendered = 'true';
