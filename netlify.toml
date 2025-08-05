@@ -12,6 +12,10 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+  
+[[functions]]
+  path = "/.netlify/functions/*"
+  status = 200
 
 
 # All Firebase environment variables are set in Netlify UI:
