@@ -1,5 +1,5 @@
-'use client' // This directive is typically used for React Server Components, but kept here as it was in the original file.
-import React, { useState, useEffect, useRef } from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { InView } from 'react-intersection-observer';
 import { addToWaitlist } from '../../services/waitlistService';
@@ -8,8 +8,8 @@ type Mode = 'light' | 'dark';
 
 declare global {
   interface Window {
-    grecaptcha: any; // Google reCAPTCHA object
-    recaptchaReady: boolean; // Our custom flag
+    grecaptcha: any;
+    recaptchaReady: boolean;
   }
 }
 
@@ -24,21 +24,17 @@ export const Component = ({ mode }: Props) => {
   const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false);
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
-  // Determine if running in WebContainer
   const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const siteKeyConfigured = !!siteKey;
 
   useEffect(() => {
-    // Only load reCAPTCHA if not in WebContainer and site key is configured
     if (!isWebContainer && siteKeyConfigured && !recaptchaLoaded) {
-      // Define the callback function globally
       window.onRecaptchaLoaded = () => {
         setIsRecaptchaApiReady(true);
         console.log('reCAPTCHA v3 API loaded successfully');
       };
 
-      // Dynamically load the reCAPTCHA script
       const script = document.createElement('script');
       script.src = `https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoaded&render=${siteKey}`;
       script.async = true;
@@ -48,7 +44,6 @@ export const Component = ({ mode }: Props) => {
       setRecaptchaLoaded(true);
       console.log('reCAPTCHA v3 script loaded dynamically');
 
-      // Cleanup function to remove script if component unmounts
       return () => {
         const existingScript = document.querySelector(`script[src*="recaptcha"]`);
         if (existingScript) {
@@ -68,14 +63,12 @@ export const Component = ({ mode }: Props) => {
     
     let recaptchaToken: string | undefined;
     
-    // Execute reCAPTCHA v3 if not in WebContainer and API is ready
     if (!isWebContainer && siteKeyConfigured && isRecaptchaApiReady && window.grecaptcha) {
       try {
         recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'submit' });
         console.log('reCAPTCHA v3 token obtained');
       } catch (error) {
         console.error('reCAPTCHA v3 execution failed:', error);
-        // Continue without token - let the server handle it
       }
     }
     
@@ -88,14 +81,26 @@ export const Component = ({ mode }: Props) => {
     setIsLoading(false);
   };
 
-  const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
+  const isEmailValid = email.trim() !== '' && email.includes('@');
   const canSubmit = isEmailValid && (isWebContainer || (siteKeyConfigured && isRecaptchaApiReady));
+
+  const containerClasses = mode === 'dark' 
+    ? 'bg-background border border-accent' 
+    : 'bg-white';
+
+  const titleClasses = mode === 'dark' 
+    ? 'text-primary' 
+    : 'text-gray-800';
+
+  const textClasses = mode === 'dark' 
+    ? 'text-black' 
+    : 'text-gray-500';
 
   return (
     <div className="flex justify-center items-center py-20">
       <InView triggerOnce threshold={0.5}>
         {({ inView, ref }) => (
-          <div ref={ref} className={`${mode === 'dark' ? 'bg-[#F7F7FF] border border-[#BDD5EA]' : 'bg-white'} w-25 max-w-xl mx-auto rounded-xl ${submitted ? 'p-1' : 'p-6'} z-50`}> {/* max-w-xl for outer box */}
+          <div ref={ref} className={`${containerClasses} w-25 max-w-xl mx-auto rounded-xl ${submitted ? 'p-1' : 'p-6'} z-50`}>
             {!submitted ? (
               <div>
                 <div className="text-center">
@@ -103,7 +108,7 @@ export const Component = ({ mode }: Props) => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : -20 }}
                     transition={{ duration: 0.5 }}
-                    className={`${mode === 'dark' ? 'text-[#10219F]' : 'text-gray-800'} text-3xl font-bold mb-4`}
+                    className={`${titleClasses} text-3xl font-bold mb-4`}
                   >
                     Join our waitlist
                   </motion.h2>
@@ -111,7 +116,7 @@ export const Component = ({ mode }: Props) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: inView ? 1 : 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className={`${mode === 'dark' ? 'text-[#000000]' : 'text-gray-500'} text-sm mb-6 opacity-80`}
+                    className={`${textClasses} text-sm mb-6 opacity-80`}
                   >
                     Be the first to access boardom's intelligent workflow system. Enter your email below to join the waitlist.
                   </motion.p>
@@ -121,41 +126,44 @@ export const Component = ({ mode }: Props) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
-                  className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
+                  className="flex flex-col items-center justify-center space-y-4"
                   onSubmit={handleSubmit}
                 >
                   {isWebContainer ? (
-                    <div className="p-3 bg-blue-100 border border-blue-300 rounded-lg text-sm text-blue-800">
+                    <div className="info-box info-box-blue">
                       ℹ️ reCAPTCHA is disabled in development environment due to dynamic domain.
                     </div>
                   ) : siteKeyConfigured ? (
-                    <div className="p-3 bg-green-100 border border-green-300 rounded-lg text-sm text-green-800">
+                    <div className="info-box info-box-green">
                       🛡️ This form is protected by reCAPTCHA v3 and the Google Privacy Policy and Terms of Service apply.
                     </div>
                   ) : (
-                    <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
+                    <div className="info-box info-box-yellow">
                       ⚠️ reCAPTCHA is not configured. Please add your site key to continue.
                     </div>
                   )}
-                <div className={`flex w-full items-center`}>
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    className="flex-1 w-full bg-[#F7F7FF] appearance-none rounded-l-full py-2 px-4 text-[#000000] leading-tight focus:outline-none focus:ring-2 focus:ring-[#10219F] border border-[#BDD5EA]"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={isLoading}
-                  />
-                  <motion.button
-                    type="submit"
-                    disabled={!canSubmit || isLoading}
-                    className={`bg-[#10219F] text-[#F7F7FF] py-[6px] px-6 rounded-r-full focus:outline-none transition-all duration-300 border border-[#BDD5EA] ${canSubmit && !isLoading ? 'cursor-pointer hover:bg-[#FE5F55]' : 'cursor-not-allowed opacity-60'}`}
-                  >
-                    {isLoading ? 'Joining...' : 'Join'}
-                  </motion.button>
-                </div>
+                  <div className="flex w-full items-center">
+                    <input
+                      type="email"
+                      placeholder="Your email"
+                      className="flex-1 w-full bg-background appearance-none rounded-l-full py-2 px-4 text-black leading-tight focus-outline border border-accent"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={isLoading}
+                    />
+                    <motion.button
+                      type="submit"
+                      disabled={!canSubmit || isLoading}
+                      className={`bg-primary text-white py-2 px-6 rounded-r-full focus-outline transition-all border border-accent ${
+                        canSubmit && !isLoading 
+                          ? 'cursor-pointer hover:bg-secondary' 
+                          : 'cursor-not-allowed opacity-60'
+                      }`}
+                    >
+                      {isLoading ? 'Joining...' : 'Join'}
+                    </motion.button>
+                  </div>
                 </motion.form>
-                
               </div>
             ) : (
               <motion.div
@@ -168,7 +176,7 @@ export const Component = ({ mode }: Props) => {
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className={`${mode === 'dark' ? 'text-[#10219F]' : 'text-gray-800'} text-2xl font-bold mb-4 mt-8`}
+                  className={`${titleClasses} text-2xl font-bold mb-4 mt-8`}
                 >
                   You are on the waitlist
                 </motion.h2>
@@ -176,7 +184,7 @@ export const Component = ({ mode }: Props) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`${mode === 'dark' ? 'text-[#000000]' : 'text-gray-500'} mb-6 opacity-80`}
+                  className={`${textClasses} mb-6 opacity-80`}
                 >
                   Thank you for joining boardom's waitlist.<br /> We'll keep you updated.
                 </motion.p>
@@ -189,7 +197,7 @@ export const Component = ({ mode }: Props) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className={`${mode === 'dark' ? 'text-[#10219F]' : 'text-slate-800'} size-6 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}
+                    className={`${titleClasses} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}
                   >
                     <path
                       fillRule="evenodd"

@@ -7,16 +7,21 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', className = '', ...props }) => {
-  const baseStyles = 'px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white bg-blue';
-
-  const variantStyles = {
-    primary: 'bg-[#F7F7FF] text-[#10219F] hover:bg-[#10219F] hover:text-[#F7F7FF] focus:ring-[#10219F] disabled:bg-gray-400 disabled:cursor-not-allowed',
-    secondary: 'bg-[#BDD5EA] text-[#10219F] hover:bg-blue-200 focus:ring-[#BDD5EA]',
-    ghost: 'bg-transparent text-[#000000] hover:bg-[#BDD5EA] hover:bg-opacity-20 focus:ring-[#BDD5EA]'
+  const getVariantClasses = () => {
+    switch (variant) {
+      case 'primary':
+        return 'primary-button';
+      case 'secondary':
+        return 'bg-accent text-primary hover:bg-blue-200 focus-ring';
+      case 'ghost':
+        return 'bg-transparent text-black hover:bg-accent hover:opacity-20 focus-ring';
+      default:
+        return 'primary-button';
+    }
   };
 
   return (
-    <button className={`${baseStyles} ${variantStyles[variant]} ${className}`} {...props}>
+    <button className={`${getVariantClasses()} ${className}`} {...props}>
       {children}
     </button>
   );
