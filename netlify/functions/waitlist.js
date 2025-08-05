@@ -1,11 +1,11 @@
-const admin = require('firebase-admin');
+import admin from 'firebase-admin';
 
-// Initialize Firebase Admin SDK only once
-let app;
+// Initialize Firebase Admin SDK
+let firebaseApp;
 
 const initializeFirebase = () => {
-  if (admin.apps.length > 0) {
-    return admin.apps[0];
+  if (firebaseApp) {
+    return firebaseApp;
   }
 
   try {
@@ -44,12 +44,12 @@ const initializeFirebase = () => {
     console.log('Client email:', firebaseConfig.clientEmail);
     console.log('Private key length:', privateKey?.length || 0);
 
-    app = admin.initializeApp({
+    firebaseApp = admin.initializeApp({
       credential: admin.credential.cert(firebaseConfig),
     });
 
     console.log('Firebase Admin initialized successfully');
-    return app;
+    return firebaseApp;
 
   } catch (error) {
     console.error('Firebase Admin initialization error:', error.message);
@@ -57,7 +57,7 @@ const initializeFirebase = () => {
   }
 };
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // Set CORS headers for all responses
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -67,7 +67,8 @@ exports.handler = async (event, context) => {
   };
 
   console.log(`Waitlist function called: ${event.httpMethod} ${event.path}`);
-  console.log('Headers:', JSON.stringify(event.headers, null, 2));
+  console.log('Event body:', event.body);
+  console.log('Content-Type:', event.headers['content-type']);
 
   // Handle preflight OPTIONS request
   if (event.httpMethod === 'OPTIONS') {
@@ -90,7 +91,7 @@ exports.handler = async (event, context) => {
         message: 'Method Not Allowed - Only POST requests are supported',
         debug: {
           method: event.httpMethod,
-          path: event.path,
+          path: event.path || 'unknown',
         }
       }),
     };
@@ -123,8 +124,11 @@ exports.handler = async (event, context) => {
     // Parse request body
     let requestBody;
     try {
-      console.log('Raw body:', event.body);
-      requestBody = JSON.parse(event.body || '{}');
+      if (!event.body) {
+        throw new Error('Request body is empty');
+      }
+      
+      requestBody = JSON.parse(event.body);
       console.log('Parsed body:', requestBody);
     } catch (parseError) {
       console.error('Body parsing error:', parseError.message);
@@ -136,7 +140,8 @@ exports.handler = async (event, context) => {
           message: 'Invalid request format.',
           debug: {
             error: 'JSON parsing failed',
-            rawBody: event.body,
+            hasBody: !!event.body,
+            bodyLength: event.body?.length || 0,
           }
         }),
       };
@@ -173,10 +178,6 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ 
           success: false,
           message: 'Please enter a valid email address.',
-          debug: {
-            email: trimmedEmail,
-            passedRegex: false,
-          }
         }),
       };
     }
@@ -202,10 +203,6 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ 
           success: false,
           message: 'This email is already on the waitlist.',
-          debug: {
-            email: trimmedEmail,
-            existingDocs: existingEmailQuery.size,
-          }
         }),
       };
     }
@@ -218,9 +215,7 @@ exports.handler = async (event, context) => {
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
       status: 'pending',
       source: 'website',
-      userAgent: event.headers['user-agent'] || 'unknown',
-      deployId: context.deployId || 'unknown',
-      requestId: context.requestId || 'unknown',
+      userAgent: event.headers['user-agent'] || 'unknown'
     };
 
     console.log('Adding document with data:', docData);
@@ -233,11 +228,6 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         success: true,
         message: 'Successfully added to waitlist! We\'ll notify you when boardom is ready.',
-        debug: {
-          email: trimmedEmail,
-          documentId: docRef.id,
-          timestamp: new Date().toISOString(),
-        }
       }),
     };
 
@@ -252,12 +242,6 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         success: false,
         message: 'Failed to join waitlist. Please try again later.',
-        debug: {
-          error: error.message,
-          code: error.code,
-          stack: error.stack,
-          timestamp: new Date().toISOString(),
-        }
       }),
     };
   }

@@ -1,16 +1,28 @@
-export interface WaitlistEntry {
-  email: string;
-  timestamp: Date;
-  status: 'pending' | 'approved' | 'notified';
-}
-
 export const addToWaitlist = async (email: string, recaptchaToken?: string): Promise<{ success: boolean; message: string }> => {
   try {
-    // Call Netlify function instead of direct Firebase
+    // Check if we're in development mode (Vite dev server)
+    const isDevelopment = import.meta.env.DEV;
+    
+    if (isDevelopment) {
+      // In development, simulate the waitlist functionality
+      console.log('Development mode: Simulating waitlist signup for:', email);
+      
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Simulate success (you can change this to test error states)
+      return {
+        success: true,
+        message: "Successfully added to waitlist! (Development mode - not actually saved)"
+      };
+    }
+    
+    // Production: Call Netlify function
+    console.log('Production mode: Calling Netlify function...');
     const requestBody: { email: string; recaptchaToken?: string } = { 
       email: email.toLowerCase() 
     };
-    
+
     if (recaptchaToken) {
       requestBody.recaptchaToken = recaptchaToken;
     }
@@ -19,7 +31,6 @@ export const addToWaitlist = async (email: string, recaptchaToken?: string): Pro
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
       },
       body: JSON.stringify(requestBody),
     });
@@ -37,7 +48,7 @@ export const addToWaitlist = async (email: string, recaptchaToken?: string): Pro
     if (!response.ok) {
       return {
         success: false,
-        message: result?.message || "Unable to join waitlist right now. Please try again later."
+        message: result?.message || `Server error (${response.status}). Please try again later.`
       };
     }
 
