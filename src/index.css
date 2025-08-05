@@ -674,7 +674,7 @@ html, body {
   display: inline-block;
   width: 0.5rem;
   height: 0.5rem;
-  background-color: currentColor;
+  background-color: var(--color-text);
   margin-left: var(--spacing-1);
 }
 
