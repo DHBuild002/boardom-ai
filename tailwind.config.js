@@ -7,6 +7,7 @@ export default {
     "./*.{js,ts,jsx,tsx}",
     "./App.tsx"
   ],
+  mode: 'jit',
   theme: {
     extend: {
       colors: {
