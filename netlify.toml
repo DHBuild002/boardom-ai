@@ -5,15 +5,11 @@
 [build.environment]
   NODE_VERSION = "20.11.0"
   NPM_FLAGS = "--production=false"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_RECAPTCHA_SITE_KEY"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-
-[[redirects]]
-  from = "/.netlify/functions/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
 
 [[redirects]]
   from = "/*"
