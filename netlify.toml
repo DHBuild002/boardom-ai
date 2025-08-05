@@ -1,22 +1,21 @@
 [build]
   publish = "dist"
   command = "npm ci && npm run build"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF"
 
 [build.environment]
   NODE_VERSION = "20.11.0"
-  SECRETS_SCAN_OMIT_PATHS = "netlify/functions"
-  SECRETS_SCAN_OMIT_KEYS = "VITE_RECAPTCHA_SITE_KEY,VITE_FIREBASE_API_KEY,VITE_FIREBASE_PROJECT_ID"
   NPM_FLAGS = "--production=false"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  
-[[functions]]
-  path = "/.netlify/functions/*"
+
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
   status = 200
 
-
-# All Firebase environment variables are set in Netlify UI:
-# FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
