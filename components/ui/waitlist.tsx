@@ -21,34 +21,42 @@ export const Component = ({ mode }: Props) => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false); // New state for API readiness
+  const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false);
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
 
   // Determine if running in WebContainer
   const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  const siteKeyConfigured = !!siteKey;
 
   useEffect(() => {
-    const handleRecaptchaApiReady = () => {
-      setIsRecaptchaApiReady(true);
-      console.log('reCAPTCHA API is ready via event listener.');
-    };
-
-    // Only set up listener if not in WebContainer
-    if (!isWebContainer) {
-      document.addEventListener('recaptcha-api-ready', handleRecaptchaApiReady);
-      // Initial check in case the API loaded before the component mounted
-      if (window.recaptchaReady) {
+    // Only load reCAPTCHA if not in WebContainer and site key is configured
+    if (!isWebContainer && siteKeyConfigured && !recaptchaLoaded) {
+      // Define the callback function globally
+      window.onRecaptchaLoaded = () => {
         setIsRecaptchaApiReady(true);
-        console.log('reCAPTCHA API was already ready on mount.');
-      }
+        console.log('reCAPTCHA v3 API loaded successfully');
+      };
+
+      // Dynamically load the reCAPTCHA script
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoaded&render=${siteKey}`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      
+      setRecaptchaLoaded(true);
+      console.log('reCAPTCHA v3 script loaded dynamically');
+
+      // Cleanup function to remove script if component unmounts
+      return () => {
+        const existingScript = document.querySelector(`script[src*="recaptcha"]`);
+        if (existingScript) {
+          document.head.removeChild(existingScript);
+        }
+      };
     }
-
-    return () => {
-      if (!isWebContainer) {
-        document.removeEventListener('recaptcha-api-ready', handleRecaptchaApiReady);
-      }
-    };
-  }, [isWebContainer]); // Re-run if isWebContainer changes (though unlikely in practice)
-
+  }, [isWebContainer, siteKeyConfigured, siteKey, recaptchaLoaded]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,7 +71,6 @@ export const Component = ({ mode }: Props) => {
     // Execute reCAPTCHA v3 if not in WebContainer and API is ready
     if (!isWebContainer && siteKeyConfigured && isRecaptchaApiReady && window.grecaptcha) {
       try {
-        const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
         recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'submit' });
         console.log('reCAPTCHA v3 token obtained');
       } catch (error) {
@@ -82,7 +89,6 @@ export const Component = ({ mode }: Props) => {
   };
 
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
-  const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const canSubmit = isEmailValid && (isWebContainer || (siteKeyConfigured && isRecaptchaApiReady));
 
   return (
