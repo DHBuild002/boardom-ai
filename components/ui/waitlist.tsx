@@ -21,9 +21,7 @@ export const Component = ({ mode }: Props) => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [isRecaptchaApiReady, setIsRecaptchaApiReady] = useState(false); // New state for API readiness
-  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
 
   // Determine if running in WebContainer
   const isWebContainer = window.location.hostname.includes('webcontainer-api.io');
@@ -51,55 +49,6 @@ export const Component = ({ mode }: Props) => {
     };
   }, [isWebContainer]); // Re-run if isWebContainer changes (though unlikely in practice)
 
-  useEffect(() => {
-    const renderRecaptcha = () => {
-      const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-      
-      // Debug logging
-      console.log('=== reCAPTCHA Debug Info ===');
-      console.log('Site Key configured:', !!siteKey);
-      console.log('Site Key Length:', siteKey?.length || 0);
-      console.log('grecaptcha available:', !!window.grecaptcha);
-      console.log('Container ref:', !!recaptchaContainerRef.current);
-      console.log('Already rendered:', recaptchaContainerRef.current?.dataset.recaptchaRendered);
-      console.log('isRecaptchaApiReady state:', isRecaptchaApiReady); // New debug info
-      console.log('isWebContainer:', isWebContainer);
-      console.log('isRecaptchaApiReady state:', isRecaptchaApiReady); // New debug info
-      console.log('isWebContainer:', isWebContainer);
-      console.log('============================');
-      
-      // Only attempt to render if API is ready, container exists, not already rendered, AND NOT in WebContainer
-      if (isRecaptchaApiReady && recaptchaContainerRef.current && window.grecaptcha && !recaptchaContainerRef.current.dataset.recaptchaRendered && !isWebContainer) {
-        console.log('Attempting to render reCAPTCHA...');
-        window.grecaptcha.render(recaptchaContainerRef.current, {
-          sitekey: siteKey,
-          callback: (token: string) => {
-            console.log('reCAPTCHA callback triggered, token received');
-            setRecaptchaToken(token);
-          },
-          'expired-callback': () => {
-            console.log('reCAPTCHA expired callback triggered');
-            setRecaptchaToken(null);
-          },
-          'error-callback': (error: any) => {
-            console.error('reCAPTCHA error callback triggered. This usually means:');
-            console.error('1. Invalid site key for this domain');
-            console.error('2. Site key is for wrong reCAPTCHA version (need v2)');
-            console.error('3. Domain not registered in reCAPTCHA console');
-            console.error('4. Network connectivity issues');
-            console.error('Current domain:', window.location.hostname);
-          },
-        });
-        recaptchaContainerRef.current.dataset.recaptchaRendered = 'true';
-        console.log('reCAPTCHA render attempt completed');
-      }
-    };
-
-    // Trigger render when API is ready, container ref changes, and not in WebContainer
-    if (isRecaptchaApiReady && recaptchaContainerRef.current && !isWebContainer) {
-      renderRecaptcha();
-    }
-  }, [isRecaptchaApiReady, recaptchaContainerRef.current, isWebContainer]); // Re-run when API ready state, ref, or webcontainer status changes
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,29 +56,34 @@ export const Component = ({ mode }: Props) => {
       return;
     }
     
-    if (!isWebContainer && siteKeyConfigured && !recaptchaToken) {
-      // This case should ideally be prevented by the disabled state of the button
-      console.warn("reCAPTCHA token is missing. Please complete the CAPTCHA.");
-      return;
+    setIsLoading(true);
+    
+    let recaptchaToken: string | undefined;
+    
+    // Execute reCAPTCHA v3 if not in WebContainer and API is ready
+    if (!isWebContainer && siteKeyConfigured && isRecaptchaApiReady && window.grecaptcha) {
+      try {
+        const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+        recaptchaToken = await window.grecaptcha.execute(siteKey, { action: 'submit' });
+        console.log('reCAPTCHA v3 token obtained');
+      } catch (error) {
+        console.error('reCAPTCHA v3 execution failed:', error);
+        // Continue without token - let the server handle it
+      }
     }
     
-    setIsLoading(true);
-    const result = await addToWaitlist(email, recaptchaToken || undefined);
+    const result = await addToWaitlist(email, recaptchaToken);
     
     if (result.success) {
       setSubmitted(true);
       setEmail('');
-      setRecaptchaToken(null); // Reset token after successful submission
-      if (window.grecaptcha && !isWebContainer) {
-        window.grecaptcha.reset(); // Reset the reCAPTCHA widget
-      }
     }
     setIsLoading(false);
   };
 
   const isEmailValid = email.trim() !== '' && email.includes('@'); // Helper for email validation
   const siteKeyConfigured = !!import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-  const canSubmit = isEmailValid && (isWebContainer || (siteKeyConfigured && isRecaptchaApiReady && recaptchaToken !== null));
+  const canSubmit = isEmailValid && (isWebContainer || (siteKeyConfigured && isRecaptchaApiReady));
 
   return (
     <div className="flex justify-center items-center py-20">
@@ -164,11 +118,13 @@ export const Component = ({ mode }: Props) => {
                   className="flex flex-col items-center justify-center space-y-4" // Changed to flex-col for better layout with recaptcha
                   onSubmit={handleSubmit}
                 >
-                  {siteKeyConfigured && !isWebContainer ? (
-                    <div ref={recaptchaContainerRef} className=""></div>
-                  ) : isWebContainer ? (
+                  {isWebContainer ? (
                     <div className="p-3 bg-blue-100 border border-blue-300 rounded-lg text-sm text-blue-800">
                       ℹ️ reCAPTCHA is disabled in development environment due to dynamic domain.
+                    </div>
+                  ) : siteKeyConfigured ? (
+                    <div className="p-3 bg-green-100 border border-green-300 rounded-lg text-sm text-green-800">
+                      🛡️ This form is protected by reCAPTCHA v3 and the Google Privacy Policy and Terms of Service apply.
                     </div>
                   ) : (
                     <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-800">
@@ -184,7 +140,6 @@ export const Component = ({ mode }: Props) => {
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isLoading}
                   />
-                  {/* Google reCAPTCHA widget container */}
                   <motion.button
                     type="submit"
                     disabled={!canSubmit || isLoading}
