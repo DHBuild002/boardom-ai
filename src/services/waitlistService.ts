@@ -1,8 +1,24 @@
 export const addToWaitlist = async (email: string, recaptchaToken?: string): Promise<{ success: boolean; message: string }> => {
   try {
-    console.log('Attempting to call waitlist function...');
+    // Check if we're in development mode (Vite dev server)
+    const isDevelopment = import.meta.env.DEV;
     
-    // Call Netlify function instead of direct Firebase
+    if (isDevelopment) {
+      // In development, simulate the waitlist functionality
+      console.log('Development mode: Simulating waitlist signup for:', email);
+      
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Simulate success (you can change this to test error states)
+      return {
+        success: true,
+        message: "Successfully added to waitlist! (Development mode - not actually saved)"
+      };
+    }
+    
+    // Production: Call Netlify function
+    console.log('Production mode: Calling Netlify function...');
     const requestBody: { email: string; recaptchaToken?: string } = { 
       email: email.toLowerCase() 
     };
@@ -10,8 +26,6 @@ export const addToWaitlist = async (email: string, recaptchaToken?: string): Pro
     if (recaptchaToken) {
       requestBody.recaptchaToken = recaptchaToken;
     }
-
-    console.log('Request body:', requestBody);
 
     const response = await fetch('/.netlify/functions/waitlist', {
       method: 'POST',
@@ -21,15 +35,10 @@ export const addToWaitlist = async (email: string, recaptchaToken?: string): Pro
       body: JSON.stringify(requestBody),
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
-
     let result;
     try {
       result = await response.json();
-      console.log('Response data:', result);
     } catch (parseError) {
-      console.error('Failed to parse response:', parseError);
       return {
         success: false,
         message: "Server response error. Please try again later."
@@ -48,7 +57,6 @@ export const addToWaitlist = async (email: string, recaptchaToken?: string): Pro
       message: result?.message || "Successfully added to waitlist!"
     };
   } catch (error) {
-    console.error('Network error:', error);
     return {
       success: false,
       message: "Network error. Please check your internet connection and try again."
